@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "skills": {
+    "ai-app": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "a74491b94e974fef9a61c147a7e6a3b564bb02ecfb95528592604be90add7089"
+    },
+    "ai-elements": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "8cb47ab6343732089a3010dc71c8d837694eaf941023790d113883bfe64531a7"
+    },
+    "ai-sdk": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "385f21d7213304656fcbb02ce2bd14f1fe69e689bd5060702defb22a290b9ceb"
+    },
+    "ai-sdk-6": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "84bf7679838fac5957ed51ad465b5187a901d4c62872ab8219a796dc930b5c25"
+    },
+    "cache-components": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "5a13ae0d78b137b56c9a514b0c4badf25ea85aa0884fc8c8c9027fe706f657be"
+    },
+    "frontend-design": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "e6ce22eb456c0111e5d71b87301c933e05c4f2c5c93a9f5afc72e58646ddd60d"
+    },
+    "next-best-practices": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "21ffc67958491cc97ef472e15e1c087ef85765e2986589a261b2d351989da000"
+    },
+    "nextjs-chatbot": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "cf70dd242e30d27eb6ead68b131663dbdbfb08c3cc0e0d290902e0e5f3b8b2a0"
+    },
+    "nextjs-seo": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "2c9ad043735c8e7cfe141186aaacf8ce911ab7c52c7424cee6a3df964ed81938"
+    },
+    "nextjs-shadcn": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "e8cb79842143937725c4466f5a14c3321fab450074f254890908f9a78b3b74fb"
+    },
+    "nuqs": {
+      "source": "pproenca/dot-skills",
+      "sourceType": "github",
+      "computedHash": "6faff5ca150b3b5899681ece80db589e858ef4db7c725b894f623da03c3d2a70"
+    },
+    "openai-agents-sdk": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "7916e7c879cc92d4a08eac4a5341b2ee7d6cbcb350b9f8169b3bfceb34f169e6"
+    },
+    "postgres-semantic-search": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "ccb93170570df11f534d486537a1752c060ea73ca6ae2336447cd64ecca4a068"
+    },
+    "react-best-practices": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "b57e926105729756b970a8c8cc56e393547e6d39d1511d88a22a7d8d902cf2fe"
+    },
+    "shadcn": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "d0d2a37e597672242ae44cda400435a76170d7470b8f7462cc412c1dde7b1cc4"
+    },
+    "skill-creator": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "b3622370f4118f58da57f295c4bea1388ffc5809da3e5cabb558fd4bec3ec8ac"
+    },
+    "supabase-postgres-best-practices": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "fed7bccdaefc6638d643059fef8d746b532153c5cc4bdb17d48dc4c6b7129de2"
+    },
+    "web-design-guidelines": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "computedHash": "844f2ab3f2377a161ad50e14d8e0e8e3836677eb1a70ab85d326d13998dc5847"
+    }
+  }
+}

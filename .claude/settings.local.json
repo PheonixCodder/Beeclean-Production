@@ -1,6 +1,16 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(rm:*)",
+      "Bash(npx prisma:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(bun run:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "framer"
-  ],
-  "enableAllProjectMcpServers": true
+  ]
 }
