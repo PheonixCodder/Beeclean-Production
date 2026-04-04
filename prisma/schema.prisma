@@ -1,0 +1,188 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Enums for type safety
+enum BlogStatus {
+  draft
+  published
+}
+
+enum JobStatus {
+  draft
+  published
+}
+
+enum ApplicationStatus {
+  pending
+  reviewed
+  accepted
+  rejected
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String
+  emailVerified Boolean   @default(false)
+  image         String?
+  position      String?   @map("position")  // Job title/role for author display
+  bio           String?   @map("bio")       // Short biography
+  role          String    @default("user")  // "user" or "admin"
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  blogs         Blog[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+model Blog {
+  id          String    @id @default(cuid())
+  title       String
+  content     String
+  excerpt     String?
+  description String?   @map("description")
+  slug        String    @unique
+  status      BlogStatus @default(draft)
+  featured    Boolean   @default(false)
+  readTime    String?
+  thumbnail   String?
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  authorId    String
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  categories  BlogCategory[]
+
+  @@index([authorId])
+  @@index([status])
+  @@index([publishedAt])
+  @@index([featured])
+  @@map("blog")
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  blogs       BlogCategory[]
+
+  @@map("category")
+}
+
+model BlogCategory {
+  id         String   @id @default(cuid())
+  blogId     String
+  categoryId String
+  blog       Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([blogId, categoryId])
+  @@index([blogId])
+  @@index([categoryId])
+  @@map("blog_category")
+}
+
+model Job {
+  id               String   @id @default(cuid())
+  title            String
+  department       String
+  location         String
+  type             String
+  salary           String
+  description      String
+  responsibilities String[] // Array of strings
+  requirements     String[] // Array of strings
+  status           JobStatus @default(draft)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([status])
+  @@index([department])
+  @@index([location])
+  @@index([type])
+  @@map("job")
+}
+
+model Application {
+  id         String   @id @default(cuid())
+  jobId      String
+  jobTitle   String
+  name       String
+  email      String
+  phone      String?
+  linkedin   String?
+  message    String?
+  resumeUrl  String?  // URL to uploaded resume file
+  status     ApplicationStatus @default(pending)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([jobId])
+  @@index([email])
+  @@index([status])
+  @@map("application")
+}
