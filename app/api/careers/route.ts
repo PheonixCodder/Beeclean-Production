@@ -12,14 +12,14 @@ export async function GET(request: NextRequest) {
       request.headers.get('x-real-ip') ||
       'unknown';
 
-    const isAllowed = await checkRateLimit(ip, 'public');
-    if (!isAllowed) {
-      const headers = await getRateLimitHeaders(ip, 'public');
-      return NextResponse.json(
-        { error: 'Too many requests. Please try again later.' },
-        { status: 429, headers }
-      );
-    }
+    // const isAllowed = await checkRateLimit(ip, 'public');
+    // if (!isAllowed) {
+    //   const headers = await getRateLimitHeaders(ip, 'public');
+    //   return NextResponse.json(
+    //     { error: 'Too many requests. Please try again later.' },
+    //     { status: 429, headers }
+    //   );
+    // }
 
     const searchParams = request.nextUrl.searchParams;
     const department = searchParams.get("department");

@@ -6,7 +6,12 @@
       "Bash(npx tsc:*)",
       "Bash(npm install:*)",
       "Bash(npm run:*)",
-      "Bash(bun run:*)"
+      "Bash(bun run:*)",
+      "Bash([ -f \"/mnt/c/Users/ubaid/AppData/Local/Temp/claude/C--Users-ubaid-OneDrive-Desktop-Beeclean-Prod-beeclean-framer/27d5cce5-24df-4a51-b52a-d772f46bca4d/tasks/biq2jw6f6.output\" ])",
+      "Read(//mnt/c/Users/ubaid/AppData/Local/Temp/claude/C--Users-ubaid-OneDrive-Desktop-Beeclean-framer/27d5cce5-24df-4a51-b52a-d772f46bca4d/tasks/**)",
+      "Bash(head -1 app/blogs/client.tsx app/blogs/[slug]/client.tsx)",
+      "Bash(ls -la hooks/use-*.ts)",
+      "Bash(curl -s http://localhost:3000/blogs)"
     ]
   },
   "enableAllProjectMcpServers": true,

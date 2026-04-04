@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { PrismaNeon } from "@prisma/adapter-neon";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, BlogStatus } from "@prisma/client";
 
 const adapter = new PrismaNeon({
   connectionString: process.env.DATABASE_URL!,
@@ -189,12 +189,12 @@ async function main() {
     const blog = await prisma.blog.upsert({
       where: { slug: blogData.slug },
       update: {
-        ...blogInfo,
+        ...(blogInfo as any),
         authorId: author.id,
         publishedAt: blogInfo.status === "published" ? new Date() : null,
       },
       create: {
-        ...blogInfo,
+        ...(blogInfo as any),
         authorId: author.id,
         publishedAt: blogInfo.status === "published" ? new Date() : null,
       },
@@ -479,8 +479,7 @@ async function main() {
         phone: appData.phone,
         linkedin: appData.linkedin,
         message: appData.message,
-        resume: appData.resume,
-        status: appData.status,
+        status: appData.status as any,
       },
     });
     console.log(`✅ Created application: ${appData.name} for ${appData.jobTitle}`);
