@@ -104,7 +104,7 @@ export function BlogEditor({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl">
+      <DialogContent className="min-w-2xl max-h-[90vh] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden rounded-3xl">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-gray-900">
             {blog ? "Edit Blog" : "Create New Blog"}

@@ -7,10 +7,16 @@ export interface BlogPost {
   description: string;
   excerpt?: string;
   publishedAt: string;
-  author?: { name: string; image: string };
+  author?: {
+    name: string;
+    image: string;
+    position?: string | null;
+    bio?: string | null;
+  };
   tags: string[];
-  thumbnail: string;
+  thumbnail?: string | null;
   content: string;
+  readTime?: string | null;
 }
 
 const fetchBlogPost = async (slug: string): Promise<BlogPost> => {

@@ -1,53 +1,36 @@
-"use client";
-import { use } from "react";
+import { notFound } from "next/navigation";
 import JobDetail from "@/components/career/job-detail";
-import ApplicationForm from "@/components/career/application-form";
 import Values from "@/components/career/values";
+import ApplicationForm from "@/components/career/application-form";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
-import { useCareer } from "@/hooks/use-career";
-import { Loader2 } from "lucide-react";
+import prisma from "@/lib/prisma";
 
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-const JobPage = ({ params }: PageProps) => {
-  const { id } = use(params);
-  const { career, isLoading, error } = useCareer(id);
+export default async function JobPage({ params }: PageProps) {
+  const { id } = await params;
+  const job = await prisma.job.findUnique({
+    where: { id },
+  });
 
-  if (isLoading) {
-    return (
-      <div>
-        <Navbar />
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <Loader2 className="w-10 h-10 animate-spin text-primary opacity-50" />
-          </div>
-        </div>
-        <Footer />
-      </div>
-    );
+  if (!job || job.status !== "published") {
+    notFound();
   }
 
-  if (error || !career) {
-    return (
-      <div>
-        <Navbar />
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Job not found
-            </h1>
-            <p className="text-gray-600">
-              The position you&apos;re looking for doesn&apos;t exist.
-            </p>
-          </div>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
+  const career = {
+    id: job.id,
+    title: job.title,
+    department: job.department,
+    location: job.location,
+    type: job.type,
+    salary: job.salary,
+    description: job.description,
+    responsibilities: job.responsibilities as string[],
+    requirements: job.requirements as string[],
+  };
 
   return (
     <div>
@@ -58,6 +41,4 @@ const JobPage = ({ params }: PageProps) => {
       <Footer />
     </div>
   );
-};
-
-export default JobPage;
+}
