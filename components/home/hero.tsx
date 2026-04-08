@@ -88,7 +88,7 @@ const Hero = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
       >
-        <img src={"/bee-store-2.png"} width={40} className="-mb-1.5 z-30" />
+        <motion.img src={"/bee-store-2.png"} width={40} className="-mb-1.5 z-30" />
         <motion.div
           whileHover={{ scale: 1.02, y: -2 }}
           whileTap={{ scale: 0.98 }}

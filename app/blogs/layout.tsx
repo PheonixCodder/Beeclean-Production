@@ -14,3 +14,8 @@ export default function BlogsLayout({
     </div>
   );
 }
+
+
+// /plan Hey the current design and layout of this page: @app/blogs/page.tsx is shit I want you to use the @.claude/design\ folder and everything inside it to  
+//   create a stunning a great blog page for a mobile app. Note: Create a plan after exploring my whole codebase and fully knowing what kind of app it is which    
+//   this website is for

@@ -233,19 +233,6 @@ export default function AnimatedBeeCanvas({
     return () => clearTimeout(timer);
   }, [currentFrameRef.current, isReady, totalFrames, getFrameUrl]);
 
-  if (!isReady) {
-    return (
-      <div
-        className={`animate-pulse rounded-lg flex items-center justify-center ${className}`}
-        style={{ width: canvasWidth, height: canvasHeight }}
-      >
-        <div className="text-center">
-          <div className="text-gray-500 text-sm">Loading bee...</div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <canvas
       ref={canvasRef}

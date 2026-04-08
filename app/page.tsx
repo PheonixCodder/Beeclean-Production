@@ -6,19 +6,29 @@ import FAQ from "@/components/home/faq";
 import Features from "@/components/home/features";
 import Hero from "@/components/home/hero";
 import HowItWorks from "@/components/home/how-it-works";
-import PhoneDecodeScroll from "@/components/home/phone-decode";
+// import PhoneDecodeScroll from "@/components/home/phone-decode";
 import Pricing from "@/components/home/pricing";
 import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
+import DuplicateSelector from "@/components/home/duplicate-images";
+import InteractiveBeeMascot from "@/components/canvas/interactive-bee-mascot";
 
 export const metadata: Metadata = {
   title: "Beeclean - Professional iPhone Cleaning & Optimization",
-  description: "Keep your iPhone running like new with Beeclean. Advanced cleaning, optimization, and performance tools for iOS devices.",
-  keywords: ["iPhone cleaning", "iOS optimization", "iPhone performance", "clean iPhone", "optimize iPhone"],
+  description:
+    "Keep your iPhone running like new with Beeclean. Advanced cleaning, optimization, and performance tools for iOS devices.",
+  keywords: [
+    "iPhone cleaning",
+    "iOS optimization",
+    "iPhone performance",
+    "clean iPhone",
+    "optimize iPhone",
+  ],
   authors: [{ name: "Beeclean Team" }],
   openGraph: {
     title: "Beeclean - Professional iPhone Cleaning & Optimization",
-    description: "Keep your iPhone running like new with Beeclean. Advanced cleaning, optimization, and performance tools for iOS devices.",
+    description:
+      "Keep your iPhone running like new with Beeclean. Advanced cleaning, optimization, and performance tools for iOS devices.",
     type: "website",
     locale: "en_US",
     siteName: "Beeclean",
@@ -43,9 +53,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
 };
@@ -56,12 +66,16 @@ const Home = () => {
       <Navbar />
       <Hero />
       <BeeBuddyHero />
-      <PhoneDecodeScroll />
+      {/* <InteractiveBeeMascot /> */}
+      {/* <PhoneDecodeScroll /> */}
+      <DuplicateSelector />
       {/* <HowItWorks /> */}
       <Features />
       <Pricing />
       {/* <BlogSlider /> */}
+      <HowItWorks />
       <FAQ />
+      <CTA />
       <Footer />
     </div>
   );

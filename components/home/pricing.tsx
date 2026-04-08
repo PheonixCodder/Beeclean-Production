@@ -36,7 +36,7 @@ const Pricing = () => {
         "Screen recording cleanup",
         "Priority support",
       ],
-      highlight: true,
+      highlight: false,
     },
     {
       name: "Premium",

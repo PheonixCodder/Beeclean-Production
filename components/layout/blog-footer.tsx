@@ -18,8 +18,8 @@ export default function BlogFooter() {
       { name: "Contact", href: "#" },
     ],
     Legal: [
-      { name: "Privacy Policy", href: "#" },
-      { name: "Terms of Service", href: "#" },
+      { name: "Privacy Policy", href: "/privacy-policy" },
+      { name: "Terms of Service", href: "/terms-conditions" },
     ],
   };
 
@@ -196,10 +196,10 @@ export default function BlogFooter() {
             © {new Date().getFullYear()} Beeclean. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-sm text-gray-400">
-            <Link href="#" className="hover:text-gray-600 transition-colors">
+            <Link href="/privacy-policy" className="hover:text-gray-600 transition-colors">
               Privacy Policy
             </Link>
-            <Link href="#" className="hover:text-gray-600 transition-colors">
+            <Link href="/terms-conditions" className="hover:text-gray-600 transition-colors">
               Terms of Service
             </Link>
           </div>

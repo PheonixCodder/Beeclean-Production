@@ -23,140 +23,111 @@ export default function Footer() {
 
   return (
     <motion.footer
-      className="relative w-full bg-white pt-24 pb-12 px-8 font-satoshi overflow-hidden border-t border-gray-200"
+      className="relative w-full bg-[#f4f4f4] pt-20 pb-6 px-8 font-satoshi overflow-hidden border-t border-gray-200"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.1 }}
       variants={{
         hidden: { opacity: 0 },
         visible: {
           opacity: 1,
-          transition: {
-            staggerChildren: 0.15,
-            delayChildren: 0.1,
-          },
+          transition: { staggerChildren: 0.1, delayChildren: 0.1 },
         },
       }}
     >
-      <motion.div
-        className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-sm"
-        variants={{
-          hidden: { opacity: 0, y: 30 },
-          visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.6, ease: "easeOut" },
-          },
-        }}
-      >
-        {/* Branding Section */}
+      <div className="max-w-7xl mx-auto flex flex-col">
+        {/* Top Content Row */}
         <motion.div
-          className="flex flex-col gap-2"
+          className="grid grid-cols-1 md:grid-cols-3 gap-12 text-sm relative z-20"
           variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: { delay: 0.1, duration: 0.5 },
-            },
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
           }}
         >
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center">
-            <img src="/logo.svg" alt="logo" width={32} />
+          {/* Branding Section */}
+          <div className="flex flex-col gap-2">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center">
+              <img src="/logo.svg" alt="logo" width={32} />
+            </div>
+            <h2 className="font-semibold text-xl text-gray-900 mt-2">
+              Beeclean
+            </h2>
+            <p className="text-gray-500">Your storage under control</p>
           </div>
-          <h2 className="font-semibold text-xl text-gray-900 mt-2">Beeclean</h2>
-          <p className="text-gray-500">Your storage under control</p>
-          <div className="mt-auto pt-8">
-            <p className="text-gray-400 text-xs">© 2026 Beeclean</p>
-            <p className="text-gray-400 text-xs text-nowrap">
-              All rights reserved
-            </p>
+
+          {/* Links Column */}
+          <div>
+            <h3 className="text-gray-400 font-semibold mb-4">Links</h3>
+            <ul className="space-y-2">
+              {footerLinks.Links.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className={`${
+                      link.label === "Home"
+                        ? "text-yellow-500"
+                        : "text-gray-900"
+                    } font-medium hover:opacity-70 transition-opacity`}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Connect Column */}
+          <div>
+            <h3 className="text-gray-400 font-semibold mb-4">Connect</h3>
+            <ul className="space-y-2">
+              {footerLinks.Connect.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-gray-900 font-medium hover:opacity-70"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </motion.div>
 
-        {/* Links Column */}
+        {/* Massive Logo with aggressive space reduction */}
         <motion.div
-          className="md:pb-25"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: { delay: 0.2, duration: 0.5 },
-            },
-          }}
+          className="flex justify-center -my-20 md:-my-50 relative z-10 pointer-events-none"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
         >
-          <h3 className="text-gray-400 font-semibold mb-4">Links</h3>
-          <ul className="space-y-3">
-            {footerLinks.Links.map((link) => (
-              <motion.li
-                key={link.label}
-                whileHover={{ x: 4 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Link
-                  href={link.href}
-                  className={` ${
-                    link.label === "Home" ? "text-yellow-500" : "text-gray-900"
-                  } font-medium hover:opacity-70 transition-opacity`}
-                >
-                  {link.label}
-                </Link>
-              </motion.li>
-            ))}
-          </ul>
+          <Link
+            href="/"
+            className="relative block w-full max-w-7xl h-48 md:h-250! pointer-events-auto"
+          >
+            <Image
+              src="/logo-footer.png"
+              alt="Beeclean Footer Logo"
+              fill
+              className="object-contain"
+              priority
+            />
+          </Link>
         </motion.div>
 
-        {/* Connect Column */}
-        <motion.div
-          className="relative"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: { delay: 0.3, duration: 0.5 },
-            },
-          }}
-        >
-          <h3 className="text-gray-400 font-semibold mb-4">Connect</h3>
-          <ul className="space-y-3">
-            {footerLinks.Connect.map((link) => (
-              <motion.li
-                key={link.label}
-                whileHover={{ x: 4 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Link
-                  href={link.href}
-                  className="text-gray-900 font-medium hover:opacity-70 transition-opacity"
-                >
-                  {link.label}
-                </Link>
-              </motion.li>
-            ))}
-          </ul>
-          {/* Secondary Links (Bottom Right) */}
-          <div className="absolute bottom-0 right-0 flex gap-4 text-xs text-gray-400">
-            <Link href="#" className="hover:underline">
+        {/* Bottom Legal Row */}
+        <div className="flex flex-col md:flex-row justify-between items-center border-t border-gray-200 pt-4 relative z-20 text-[10px] md:text-xs text-gray-400">
+          <p>© 2026 Beeclean. All rights reserved.</p>
+          <div className="flex gap-6 mt-2 md:mt-0">
+            <Link href="/terms-conditions" className="hover:underline">
               Terms & Conditions
             </Link>
-            <Link href="#" className="hover:underline">
+            <Link href="/privacy-policy" className="hover:underline">
               Privacy Policy
             </Link>
           </div>
-        </motion.div>
-      </motion.div>
-
-      {/* Bottom Center Icon - Adjusted for half-visibility */}
-      <motion.div
-        className="absolute left-1/2 -translate-x-1/2 -bottom-6 flex justify-center"
-        initial={{ scale: 0, rotate: -15 }}
-        whileInView={{ scale: 1, rotate: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.4, duration: 0.6, type: "spring" }}
-      >
-        <div className="w-24 h-24 relative">
-          <Image src="/icon.svg" alt="icon" fill className="object-contain" />
         </div>
-      </motion.div>
+      </div>
     </motion.footer>
   );
 }

@@ -76,7 +76,9 @@ const FAQ = () => {
           },
         }}
       >
-        <h4 className="text-5xl font-black tracking-tight">Frequently asked questions</h4>
+        <h4 className="text-5xl font-black tracking-tight">
+          Frequently asked questions
+        </h4>
         <p className="text-lg text-muted-foreground font-medium">
           Start free, go pro when you're ready! No limits, no pressure.
         </p>
@@ -105,10 +107,9 @@ const FAQ = () => {
                 visible: {
                   opacity: 1,
                   y: 0,
-                  transition: { duration: 0.5, ease: "easeOut" },
                 },
               }}
-              className="rounded-[2rem] bg-gray-50 border border-transparent overflow-hidden"
+              className="relative rounded-[2rem] bg-white/40 backdrop-blur-xl border border-white/20 shadow-lg overflow-hidden"
             >
               <motion.button
                 onClick={() => toggleFaq(index)}
