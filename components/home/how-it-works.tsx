@@ -19,60 +19,58 @@ if (typeof window !== "undefined") {
 const steps = [
   {
     id: "01",
-    title: "Project Setup",
+    title: "AI Mascot Bee",
     accent: "text-primary",
     accentBg: "bg-primary/10",
-    desc: "Initialize your project with Tailwind CSS and install the shadcn/ui accordion component.",
+    desc: "Our unique AI-powered bee mascot guides users through the cleaning process with interactive animations and personalized recommendations.",
     features: [
       {
         value: "item-1",
-        trigger: "Initialize",
-        content: "Run npx shadcn-ui@latest init to configure your project.",
+        trigger: "Interactive Guide",
+        content: "The bee mascot provides real-time tips and walks users through each optimization step with engaging animations.",
       },
       {
         value: "item-2",
-        trigger: "Install Accordion",
-        content: "Run npx shadcn-ui@latest add accordion.",
+        trigger: "Personalized Recommendations",
+        content: "Based on device usage patterns, the AI suggests customized cleaning schedules and optimization techniques.",
       },
     ],
   },
   {
     id: "02",
-    title: "GSAP Animation",
+    title: "Content Management System",
     accent: "text-chart-2",
     accentBg: "bg-chart-2/10",
-    desc: "Use @gsap/react to create smooth scroll-triggered animations for each card.",
+    desc: "Manage blog content with rich formatting, tagging, and categorization through an intuitive admin dashboard.",
     features: [
       {
         value: "item-1",
-        trigger: "Import Hooks",
-        content: "Import { useGSAP } from @gsap/react and { ScrollTrigger }.",
+        trigger: "Rich Content Editor",
+        content: "Create and edit blog posts with DOMPurify sanitization for secure HTML content including images, code blocks, and formatting.",
       },
       {
         value: "item-2",
-        trigger: "Setup Ref",
-        content:
-          "Create a container ref and scope your animations inside useGSAP.",
+        trigger: "Tag & Category System",
+        content: "Organize content with tags and categories for easy filtering and discovery. Automatic slug generation and SEO optimization.",
       },
     ],
   },
   {
     id: "03",
-    title: "Sticky Cards",
+    title: "Job Application System",
     accent: "text-chart-3",
     accentBg: "bg-chart-3/10",
-    desc: "Apply sticky positioning to make cards stack vertically as the user scrolls.",
+    desc: "Streamline job applications with resume upload, status tracking, and admin review workflow for efficient hiring.",
     features: [
       {
         value: "item-1",
-        trigger: "CSS Sticky",
-        content: "Use sticky top-0 and h-screen for the stacking effect.",
+        trigger: "Resume Upload & Validation",
+        content: "Secure file upload with magic bytes validation for PDF/DOC/DOCX files, size limits, and automatic safe filename generation.",
       },
       {
         value: "item-2",
-        trigger: "Z-Index Management",
-        content:
-          "Ensure z-index increases for each card so they stack properly.",
+        trigger: "Admin Review Workflow",
+        content: "Track application status (pending, reviewed, accepted, rejected) with admin-only access to review and update application status.",
       },
     ],
   },
@@ -83,8 +81,9 @@ export default function MobileStack() {
 
   useGSAP(
     () => {
-      const cards = gsap.utils.toArray(".card-item");
-      cards.forEach((card: any) => {
+      const cards = gsap.utils.toArray(".card-item") as any[];
+      cards.forEach((card: any, i: number) => {
+        // Fade in and scale down slightly as it reaches sticky position
         gsap.to(card, {
           scrollTrigger: {
             trigger: card,
@@ -95,13 +94,27 @@ export default function MobileStack() {
           scale: 0.95,
           opacity: 1,
         });
+
+        // Fade out as the next card approaches
+        if (i < cards.length - 1) {
+          gsap.to(card, {
+            scrollTrigger: {
+              trigger: cards[i + 1],
+              start: "top 90%",
+              end: "top 40%",
+              scrub: true,
+            },
+            opacity: 0,
+            pointerEvents: "none",
+          });
+        }
       });
     },
     { scope: container },
   );
 
   return (
-    <div ref={container} className="bg-background font-satoshi mt-50">
+    <div ref={container} className="bg-transparent font-satoshi mt-50">
       <motion.div
         className="max-w-xl mx-auto text-center flex flex-col gap-4"
         variants={{
@@ -123,7 +136,7 @@ export default function MobileStack() {
           <div
             key={i}
             className={cn(
-              "card-item sticky top-0 w-full h-screen flex items-center bg-background",
+              "card-item sticky top-0 w-full h-screen flex items-center",
               i !== 0 && "border-t border-border",
             )}
             style={{ zIndex: i + 1 }}
@@ -202,7 +215,7 @@ export default function MobileStack() {
         ))}
       </div>
       {/* Bottom spacer for the last sticky item */}
-      <div className="h-[20vh] bg-background" />
+      <div className="h-[20vh] bg-transparent" />
     </div>
   );
 }

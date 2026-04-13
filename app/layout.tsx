@@ -7,6 +7,7 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { WebVitals } from "@/components/web-vitals";
 import { validateEnv } from "@/lib/env-validator";
+import { HashScrollHandler } from "@/components/ui/hash-scroll-handler";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,11 +33,11 @@ const satoshi = localFont({
 validateEnv();
 
 export const metadata: Metadata = {
-  title: "Beeclean - Professional iPhone Cleaning & Optimization",
-  description: "Keep your iPhone running like new with Beeclean. Advanced cleaning, optimization, and performance tools for iOS devices.",
-  keywords: ["iPhone cleaning", "iOS optimization", "iPhone performance", "clean iPhone", "optimize iPhone"],
-  authors: [{ name: "Beeclean Team" }],
-  openGraph: {
+    title: "Beeclean - Professional iPhone Cleaning & Optimization",
+    description: "Keep your iPhone running like new with Beeclean. Advanced cleaning, optimization, and performance tools for iOS devices.",
+    keywords: ["iPhone cleaning", "iOS optimization", "iPhone performance", "clean iPhone", "optimize iPhone"],
+    authors: [{ name: "Beeclean Team" }],
+    openGraph: {
     title: "Beeclean - Professional iPhone Cleaning & Optimization",
     description: "Keep your iPhone running like new with Beeclean. Advanced cleaning, optimization, and performance tools for iOS devices.",
     type: "website",
@@ -87,6 +88,7 @@ export default function RootLayout({
           </ErrorBoundary>
         </NuqsAdapter>
         <WebVitals />
+        <HashScrollHandler />
       </body>
     </html>
   );

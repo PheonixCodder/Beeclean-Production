@@ -443,7 +443,7 @@ const TermsConditions = () => {
             <strong>Email:</strong>{" "}
             <a
               href="mailto:legal@beeclean.com"
-              className="text-primary hover:underline"
+              className="text-black font-bold hover:underline"
             >
               legal@beeclean.com
             </a>

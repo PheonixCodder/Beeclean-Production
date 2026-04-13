@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Apple } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { AppStoreButton } from "../ui/app-store-button";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,14 +25,14 @@ const Navbar = () => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
         isScrolled
           ? "border-b border-gray-200 bg-white/75 backdrop-blur-md"
-          : "border-transparent bg-white/0"
+          : "border-transparent bg-transparent"
       }`}
     >
       <motion.div
-        className="flex items-center justify-between max-w-7xl font-inter mx-auto px-8 py-4"
+        className="flex bg-transparent items-center justify-between max-w-7xl font-inter mx-auto px-8 py-4"
         initial="hidden"
         animate="visible"
         variants={{
@@ -75,8 +76,8 @@ const Navbar = () => {
         >
           {[
             { label: "How it Works", href: "#how-it-works" },
+            { label: "Features", href: "#features" },
             { label: "Pricing", href: "#pricing" },
-            { label: "Testimonials", href: "#testimonials" },
             { label: "Blogs", href: "/blogs" },
           ].map((link, index) => (
             <motion.div
@@ -87,7 +88,31 @@ const Navbar = () => {
             >
               <Link
                 href={link.href}
-                className="text-foreground/85 hover:text-black transition-colors"
+                className="text-foreground/80 hover:text-black transition-colors"
+                onClick={(e) => {
+                  // For hash links on home page, handle smooth scroll
+                  if (link.href.startsWith('#') && window.location.pathname === '/') {
+                    e.preventDefault();
+                    const element = document.getElementById(link.href.slice(1));
+                    if (element) {
+                      const offset = 80;
+                      const elementPosition = element.getBoundingClientRect().top;
+                      const offsetPosition = elementPosition + window.pageYOffset - offset;
+                      window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                      });
+                    }
+                  }
+                  // For hash links from other pages, redirect to home page then scroll
+                  else if (link.href.startsWith('#') && window.location.pathname !== '/') {
+                    e.preventDefault();
+                    // Store the target hash for scrolling after redirect
+                    sessionStorage.setItem('scrollToHash', link.href.slice(1));
+                    // Redirect to home page
+                    window.location.href = '/';
+                  }
+                }}
               >
                 {link.label}
               </Link>
@@ -102,15 +127,7 @@ const Navbar = () => {
             visible: { opacity: 1, x: 0, transition: { duration: 0.4 } },
           }}
         >
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Button className="py-4.5 px-4 relative z-50 flex items-center rounded-xl cursor-pointer bg-[#1a1a1a] text-white hover:bg-black shadow-apple hover:shadow-apple-hover transition-all duration-200 hover:-translate-y-0.5 active:scale-95 text-[13px] font-bold tracking-tight">
-              <img src="/apple.svg" width={20} alt="apple" className="mb-1" />
-              Download for iPhone
-            </Button>
-          </motion.div>
+          <AppStoreButton size="md" />
         </motion.div>
       </motion.div>
     </motion.nav>

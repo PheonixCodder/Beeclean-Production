@@ -185,33 +185,32 @@ import Image from "next/image";
 
 const features = [
   {
-    id: "smart-scheduling",
-    icon: <Camera className="size-6" />, // Or <CalendarDays>
-    title: "AI Smart Scheduling",
-    description: "Automatically find the best image among all duplicates.",
-    image: "/front.png", // Path to screenshot 1
+    id: "smart-selection",
+    icon: <Camera className="size-6" />,
+    title: "AI Smart Selection",
+    description: "Our AI identifies the best shot in a series of similar photos, so you only keep the perfection.",
+    image: "/front.png", 
   },
   {
-    id: "intelligent-search",
+    id: "duplicate-scan",
     icon: <Search className="size-6" />,
-    title: "Semantic Search",
-    description: "Find past meetings and notes using natural language queries.",
-    image: "/hero-2.png", // Path to screenshot 2
+    title: "Deep Duplicate Scan",
+    description: "Locate hidden duplicates and blurry shots across your entire library in seconds.",
+    image: "/hero-2.png", 
   },
   {
     id: "analytics",
     icon: <LineChart className="size-6" />,
-    title: "Meeting Analytics",
-    description: "Visualize team productivity and time allocation patterns.",
-    image: "/images/cal-ai-3.png", // Path to screenshot 3
+    title: "Storage Analytics",
+    description: "Visualize exactly what's eating your space with high-precision storage breakdowns.",
+    image: "/hero-3.png", 
   },
   {
-    id: "auto-notes",
-    icon: <Droplets className="size-6" />, // Or <BotMessageSquare>
-    title: "Automated Notes",
-    description:
-      "Generate summaries and action items instantly after every call.",
-    image: "/images/cal-ai-4.png", // Path to screenshot 4
+    id: "email-detox",
+    icon: <Droplets className="size-6" />,
+    title: "Email Detox",
+    description: "Unsubscribe from junk and mass-delete newsletters to achieve inbox zero instantly.",
+    image: "/front-wb.png", 
   },
 ];
 
@@ -225,15 +224,21 @@ export default function Features() {
 
     const interval = setInterval(() => {
       setActiveTab((prev) => (prev + 1) % features.length);
-    }, 2000); // Changes every 5 seconds
+    }, 4000); 
 
     return () => clearInterval(interval);
   }, [isPaused]);
 
   return (
-    <section className="max-w-6xl mx-auto px-4 flex flex-col gap-20 py-20 font-satoshi">
-      <motion.div
-        className="max-w-2xl text-center mx-auto flex flex-col gap-4"
+    <section className="relative w-full py-32 bg-transparent font-satoshi overflow-hidden">
+      {/* Background Polish */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-60" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <motion.div
+        className="max-w-2xl text-center mx-auto flex flex-col gap-4 mb-24"
         variants={{
           hidden: { opacity: 0, y: 30 },
           visible: {
@@ -251,84 +256,93 @@ export default function Features() {
         </p>
       </motion.div>
 
-      <div className="flex flex-col md:flex-row gap-12 items-center min-h-[600px]">
-        <div className="w-full md:w-1/2 flex justify-center relative">
-          {/* The Container (Match the aspect ratio from your working component) */}
-          <div className="relative w-[300px] aspect-[9/19]">
-            {/* 1. The Frame (Set to z-20 and inset-0) */}
-            <img
-              src="/frame.png"
-              alt="frame"
-              className="absolute inset-0 z-20 w-full h-full object-contain pointer-events-none"
-            />
-
-            {/* 2. The Active Image (Matching the exact offsets of your working hero) */}
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={activeTab}
-                src={features[activeTab].image}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.4 }}
-                className="absolute inset-0 z-10 w-full h-[96%] mt-2.5 rounded-[2.5rem] object-contain"
-                alt="Feature Screenshot"
+        <div className="flex flex-col lg:flex-row gap-20 items-center min-h-[700px]">
+          <div className="w-full lg:w-1/2 flex justify-center relative">
+            {/* The Container */}
+            <div className="relative w-[320px] md:w-[360px] aspect-[9/19]">
+              {/* Frame Shadow */}
+              <div className="absolute inset-0 z-0 bg-black/5 blur-3xl scale-90 translate-y-10 rounded-[3rem]" />
+              
+              {/* 1. The Frame */}
+              <img
+                src="/frame.png"
+                alt="frame"
+                className="absolute inset-0 z-30 w-full h-full object-contain pointer-events-none drop-shadow-2xl"
               />
-            </AnimatePresence>
-          </div>
-        </div>
 
-        {/* Right Side: Vertical Tabs */}
-        <div
-          className="w-full md:w-1/2 space-y-4"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          {features.map((feature, index) => (
-            <button
-              key={feature.id}
-              onClick={() => setActiveTab(index)}
-              className={`relative w-full text-left p-6 transition-all duration-300 group outline-none rounded-[2rem] border-[1.5px] 
-        ${activeTab === index ? "border-transparent" : "border-zinc-200"}`}
-              /* ^ If not active, show a light gray border. If active, hide it so the pill takes over. */
-            >
-              {/* The Active "Box" Style */}
-              <AnimatePresence>
-                {activeTab === index && (
-                  <motion.div
-                    layoutId="active-pill"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="absolute inset-0 bg-[#F3F4F6] border-[1.5px] border-black rounded-[2rem] shadow-sm z-0"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-              </AnimatePresence>
-
-              {/* Content Layer - Ensure z-10 so it stays above the pill */}
-              <div className="relative z-10 flex gap-4 items-start">
-                <div
-                  className={`mt-1 p-1 transition-colors ${activeTab === index ? "text-black" : "text-zinc-400"}`}
+              {/* 2. The Active Image */}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.05 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0 z-10 w-full h-[97%] mt-3 rounded-[2.8rem] overflow-hidden"
                 >
-                  {feature.icon}
-                </div>
-                <div>
-                  <h3
-                    className={`font-bold text-xl mb-2 transition-colors ${activeTab === index ? "text-black" : "text-zinc-500"}`}
+                  <img
+                    src={features[activeTab].image}
+                    className="w-[91.5%] h-full mt-0 ml-[16px] rounded-[2.8rem] object-cover"
+                    alt="Feature Screenshot"
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+
+          {/* Right Side: Vertical Tabs */}
+          <div
+            className="w-full lg:w-1/2 space-y-6"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            {features.map((feature, index) => (
+              <button
+                key={feature.id}
+                onClick={() => setActiveTab(index)}
+                className={`relative w-full text-left p-8 transition-all duration-500 group outline-none rounded-[2rem] border border-transparent
+                  ${activeTab === index ? "" : "hover:bg-zinc-50/50 hover:border-zinc-100"}`}
+              >
+                {/* The Active "Box" Style */}
+                <AnimatePresence>
+                  {activeTab === index && (
+                    <motion.div
+                      layoutId="active-pill"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute inset-0 bg-white border border-zinc-200 rounded-[2rem] shadow-apple-hover z-0"
+                      transition={{ type: "spring", bounce: 0.1, duration: 0.6 }}
+                    />
+                  )}
+                </AnimatePresence>
+
+                {/* Content Layer */}
+                <div className="relative z-10 flex gap-6 items-start">
+                  <div
+                    className={`mt-1.5 p-3 rounded-xl transition-all duration-500
+                      ${activeTab === index ? "bg-black text-white shadow-lg" : "bg-zinc-50 text-zinc-400"}`}
                   >
-                    {feature.title}
-                  </h3>
-                  <motion.p
-                    animate={{ opacity: activeTab === index ? 1 : 0.7 }}
-                    className={`text-base leading-relaxed ${activeTab === index ? "text-zinc-800" : "text-zinc-400"}`}
-                  >
-                    {feature.description}
-                  </motion.p>
+                    {feature.icon}
+                  </div>
+                  <div>
+                    <h3
+                      className={`font-black text-2xl mb-2 transition-colors duration-500
+                        ${activeTab === index ? "text-black" : "text-zinc-400 group-hover:text-zinc-600"}`}
+                    >
+                      {feature.title}
+                    </h3>
+                    <p
+                      className={`text-lg font-medium tracking-tight leading-snug transition-colors duration-500
+                        ${activeTab === index ? "text-zinc-500" : "text-zinc-400"}`}
+                    >
+                      {feature.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </button>
-          ))}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </section>

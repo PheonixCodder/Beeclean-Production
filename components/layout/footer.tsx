@@ -5,10 +5,10 @@ import Link from "next/link";
 
 export default function Footer() {
   const footerLinks = {
-    Links: [
+    Company: [
       { label: "Home", href: "/" },
       { label: "Download", href: "/download" },
-      { label: "Stories", href: "/blogs" },
+      { label: "Careers", href: "/career" },
       { label: "Blogs", href: "/blogs" },
       { label: "Pricing", href: "#pricing" },
     ],
@@ -19,11 +19,16 @@ export default function Footer() {
       { label: "YouTube", href: "#" },
       { label: "Contact", href: "#" },
     ],
+    Legal: [
+      { label: "Terms & Conditions", href: "/terms-conditions" },
+      { label: "Privacy Policy", href: "/privacy-policy" },
+      { label: "Cookie Policy", href: "#" },
+    ],
   };
 
   return (
     <motion.footer
-      className="relative w-full bg-[#f4f4f4] pt-20 pb-6 px-8 font-satoshi overflow-hidden border-t border-gray-200"
+      className="relative w-full bg-black pt-24 pb-12 px-8 font-satoshi overflow-hidden border-t border-zinc-900"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
@@ -38,93 +43,100 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col">
         {/* Top Content Row */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-12 text-sm relative z-20"
-          variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-          }}
-        >
-          {/* Branding Section */}
-          <div className="flex flex-col gap-2">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center">
-              <img src="/logo.svg" alt="logo" width={32} />
-            </div>
-            <h2 className="font-semibold text-xl text-gray-900 mt-2">
-              Beeclean
-            </h2>
-            <p className="text-gray-500">Your storage under control</p>
-          </div>
+  className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-24 text-sm relative z-20 mb-20"
+  variants={{
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  }}
+>
+  {/* Branding Section */}
+  <div className="flex flex-col gap-3 col-span-2 lg:col-span-1">
+    <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center p-2.5 shadow-apple-shadow">
+      <img src="/logo.svg" alt="logo" className="w-full h-full object-contain" />
+    </div>
+    <h2 className="font-black text-2xl text-white mt-2 tracking-tighter">
+      Beeclean
+    </h2>
+    <p className="text-zinc-500 font-medium text-base tracking-tight leading-snug max-w-[200px]">
+      Professional iPhone storage optimization.
+    </p>
+  </div>
 
-          {/* Links Column */}
-          <div>
-            <h3 className="text-gray-400 font-semibold mb-4">Links</h3>
-            <ul className="space-y-2">
-              {footerLinks.Links.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className={`${
-                      link.label === "Home"
-                        ? "text-yellow-500"
-                        : "text-gray-900"
-                    } font-medium hover:opacity-70 transition-opacity`}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+  {/* Company Column */}
+  <div>
+    <h3 className="text-white font-black uppercase text-[10px] tracking-widest mb-6 opacity-40">Company</h3>
+    <ul className="space-y-4">
+      {footerLinks.Company.map((link) => (
+        <li key={link.label}>
+          <Link
+            href={link.href}
+            className="text-zinc-400 font-bold hover:text-white hover:underline transition-all text-[15px] tracking-tight"
+          >
+            {link.label}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </div>
 
-          {/* Connect Column */}
-          <div>
-            <h3 className="text-gray-400 font-semibold mb-4">Connect</h3>
-            <ul className="space-y-2">
-              {footerLinks.Connect.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-900 font-medium hover:opacity-70"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </motion.div>
+  {/* Connect Column */}
+  <div>
+    <h3 className="text-white font-black uppercase text-[10px] tracking-widest mb-6 opacity-40">Connect</h3>
+    <ul className="space-y-4">
+      {footerLinks.Connect.map((link) => (
+        <li key={link.label}>
+          <Link
+            href={link.href}
+            className="text-zinc-400 font-bold hover:text-white hover:underline transition-all text-[15px] tracking-tight"
+          >
+            {link.label}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </div>
 
-        {/* Massive Logo with aggressive space reduction */}
+  {/* Legal Column */}
+  <div>
+    <h3 className="text-white font-black uppercase text-[10px] tracking-widest mb-6 opacity-40">Legal</h3>
+    <ul className="space-y-4">
+      {footerLinks.Legal.map((link) => (
+        <li key={link.label}>
+          <Link
+            href={link.href}
+            className="text-zinc-400 font-bold hover:text-white hover:underline transition-all text-[15px] tracking-tight"
+          >
+            {link.label}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </div>
+</motion.div>
+
+        {/* Massive Logo */}
         <motion.div
-          className="flex justify-center -my-20 md:-my-50 relative z-10 pointer-events-none"
+          className="flex justify-center relative z-10 pointer-events-none opacity-50 mix-blend-lighten"
           initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          whileInView={{ opacity: 0.5, scale: 1 }}
           transition={{ delay: 0.4, duration: 0.8 }}
         >
-          <Link
-            href="/"
-            className="relative block w-full max-w-7xl h-48 md:h-250! pointer-events-auto"
-          >
+          <div className="relative block w-full max-w-7xl h-48 md:h-120 pointer-events-auto">
             <Image
               src="/logo-footer.png"
               alt="Beeclean Footer Logo"
               fill
-              className="object-contain"
+              className="object-contain invert brightness-200"
               priority
             />
-          </Link>
+          </div>
         </motion.div>
 
         {/* Bottom Legal Row */}
-        <div className="flex flex-col md:flex-row justify-between items-center border-t border-gray-200 pt-4 relative z-20 text-[10px] md:text-xs text-gray-400">
-          <p>© 2026 Beeclean. All rights reserved.</p>
-          <div className="flex gap-6 mt-2 md:mt-0">
-            <Link href="/terms-conditions" className="hover:underline">
-              Terms & Conditions
-            </Link>
-            <Link href="/privacy-policy" className="hover:underline">
-              Privacy Policy
-            </Link>
+        <div className="flex flex-col md:flex-row justify-between items-center border-t border-zinc-900 pt-8 relative z-20 text-[10px] md:text-xs font-bold tracking-widest uppercase text-zinc-600">
+          <p>© 2026 Beeclean. Engineered for iOS.</p>
+          <div className="flex gap-6 mt-4 md:mt-0">
+            <span>Built with precision</span>
           </div>
         </div>
       </div>

@@ -110,17 +110,29 @@ export function JobForm({ open, onClose, job, onSubmit, isSubmitting }: JobFormP
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-gray-900">
-            {job ? "Edit Job" : "Create New Job"}
-          </DialogTitle>
-        </DialogHeader>
+      <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden rounded-[2.5rem] border-none shadow-2xl p-0 bg-white">
+        <div className="sticky top-0 z-50 flex items-center justify-between p-8 bg-white/80 backdrop-blur-xl border-b border-zinc-100">
+          <div>
+            <DialogHeader>
+              <DialogTitle className="text-3xl font-black text-black tracking-tighter font-satoshi">
+                {job ? "Edit Position" : "Create New Opening"}
+              </DialogTitle>
+            </DialogHeader>
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onClose}
+            className="rounded-full hover:bg-zinc-100"
+          >
+            <X className="h-5 w-5" />
+          </Button>
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6 mt-4">
+        <form onSubmit={handleSubmit} className="p-8 space-y-8 font-satoshi">
           {/* Title */}
-          <div className="space-y-2">
-            <Label htmlFor="title">Job Title *</Label>
+          <div className="space-y-3">
+            <Label htmlFor="title" className="text-xs font-black uppercase tracking-widest text-zinc-400">Position Title</Label>
             <Input
               id="title"
               value={formData.title}
@@ -130,14 +142,13 @@ export function JobForm({ open, onClose, job, onSubmit, isSubmitting }: JobFormP
               placeholder="e.g. Senior Software Engineer"
               required
               disabled={isSubmitting}
-              className="rounded-xl"
+              className="h-14 rounded-2xl border-zinc-100 bg-zinc-50/50 focus:bg-white focus:border-black transition-all font-bold text-lg"
             />
           </div>
 
-          {/* Department, Location, Type, Salary (grid) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="department">Department *</Label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-3">
+              <Label htmlFor="department" className="text-xs font-black uppercase tracking-widest text-zinc-400">Department</Label>
               <Input
                 id="department"
                 value={formData.department}
@@ -147,25 +158,25 @@ export function JobForm({ open, onClose, job, onSubmit, isSubmitting }: JobFormP
                 placeholder="e.g. Engineering"
                 required
                 disabled={isSubmitting}
-                className="rounded-xl"
+                className="h-14 rounded-2xl border-zinc-100 bg-zinc-50/50 focus:bg-white focus:border-black transition-all font-bold"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="location">Location *</Label>
+            <div className="space-y-3">
+              <Label htmlFor="location" className="text-xs font-black uppercase tracking-widest text-zinc-400">Location</Label>
               <Input
                 id="location"
                 value={formData.location}
                 onChange={(e) =>
                   setFormData((prev) => ({ ...prev, location: e.target.value }))
                 }
-                placeholder="e.g. San Francisco, CA"
+                placeholder="e.g. Remote / San Francisco"
                 required
                 disabled={isSubmitting}
-                className="rounded-xl"
+                className="h-14 rounded-2xl border-zinc-100 bg-zinc-50/50 focus:bg-white focus:border-black transition-all font-bold"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="type">Job Type *</Label>
+            <div className="space-y-3">
+              <Label htmlFor="type" className="text-xs font-black uppercase tracking-widest text-zinc-400">Employment Type</Label>
               <Select
                 value={formData.type}
                 onValueChange={(value: any) =>
@@ -173,19 +184,19 @@ export function JobForm({ open, onClose, job, onSubmit, isSubmitting }: JobFormP
                 }
                 disabled={isSubmitting}
               >
-                <SelectTrigger className="rounded-xl">
+                <SelectTrigger className="h-14 rounded-2xl border-zinc-100 bg-zinc-50/50 focus:bg-white focus:border-black transition-all font-bold">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Full-time">Full-time</SelectItem>
-                  <SelectItem value="Part-time">Part-time</SelectItem>
-                  <SelectItem value="Contract">Contract</SelectItem>
-                  <SelectItem value="Internship">Internship</SelectItem>
+                <SelectContent className="rounded-xl border-zinc-100">
+                  <SelectItem value="Full-time" className="font-bold">Full-time</SelectItem>
+                  <SelectItem value="Part-time" className="font-bold">Part-time</SelectItem>
+                  <SelectItem value="Contract" className="font-bold">Contract</SelectItem>
+                  <SelectItem value="Internship" className="font-bold">Internship</SelectItem>
                 </SelectContent>
               </Select>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="salary">Salary *</Label>
+            <div className="space-y-3">
+              <Label htmlFor="salary" className="text-xs font-black uppercase tracking-widest text-zinc-400">Salary Range</Label>
               <Input
                 id="salary"
                 value={formData.salary}
@@ -195,148 +206,161 @@ export function JobForm({ open, onClose, job, onSubmit, isSubmitting }: JobFormP
                 placeholder="e.g. $100k - $150k"
                 required
                 disabled={isSubmitting}
-                className="rounded-xl"
+                className="h-14 rounded-2xl border-zinc-100 bg-zinc-50/50 focus:bg-white focus:border-black transition-all font-bold"
               />
             </div>
           </div>
 
           {/* Description */}
-          <div className="space-y-2">
-            <Label htmlFor="description">Description *</Label>
+          <div className="space-y-3">
+            <Label htmlFor="description" className="text-xs font-black uppercase tracking-widest text-zinc-400">Job Description</Label>
             <Textarea
               id="description"
               value={formData.description}
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, description: e.target.value }))
               }
-              placeholder="Detailed job description"
+              placeholder="Tell us about the role..."
               required
               disabled={isSubmitting}
-              className="min-h-[120px] rounded-xl"
+              className="min-h-[160px] rounded-[2rem] border-zinc-100 bg-zinc-50/50 focus:bg-white focus:border-black transition-all font-medium text-lg leading-relaxed p-6"
             />
           </div>
 
           {/* Responsibilities */}
-          <div className="space-y-3">
-            <Label>Responsibilities</Label>
-            {formData.responsibilities.map((item, index) => (
-              <div key={index} className="flex gap-2">
-                <Input
-                  value={item}
-                  onChange={(e) =>
-                    updateListItem("responsibilities", index, e.target.value)
-                  }
-                  placeholder={`Responsibility ${index + 1}`}
-                  disabled={isSubmitting}
-                  className="rounded-xl"
-                />
-                {formData.responsibilities.length > 1 && (
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => removeListItem("responsibilities", index)}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <Label className="text-xs font-black uppercase tracking-widest text-zinc-400">Responsibilities</Label>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => addListItem("responsibilities")}
+                disabled={isSubmitting}
+                className="text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-black hover:bg-zinc-50"
+              >
+                + Add Item
+              </Button>
+            </div>
+            <div className="space-y-3">
+              {formData.responsibilities.map((item, index) => (
+                <div key={index} className="flex gap-3">
+                  <Input
+                    value={item}
+                    onChange={(e) =>
+                      updateListItem("responsibilities", index, e.target.value)
+                    }
+                    placeholder={`Responsibility #${index + 1}`}
                     disabled={isSubmitting}
-                    className="h-10 w-10 shrink-0 text-red-600"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                )}
-              </div>
-            ))}
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => addListItem("responsibilities")}
-              disabled={isSubmitting}
-              className="rounded-lg"
-            >
-              Add Responsibility
-            </Button>
+                    className="h-12 rounded-xl border-zinc-100 bg-zinc-50/50 focus:bg-white focus:border-black transition-all font-medium"
+                  />
+                  {formData.responsibilities.length > 1 && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => removeListItem("responsibilities", index)}
+                      disabled={isSubmitting}
+                      className="h-12 w-12 shrink-0 rounded-xl text-zinc-300 hover:text-red-600 hover:bg-red-50 transition-colors"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Requirements */}
-          <div className="space-y-3">
-            <Label>Requirements</Label>
-            {formData.requirements.map((item, index) => (
-              <div key={index} className="flex gap-2">
-                <Input
-                  value={item}
-                  onChange={(e) =>
-                    updateListItem("requirements", index, e.target.value)
-                  }
-                  placeholder={`Requirement ${index + 1}`}
-                  disabled={isSubmitting}
-                  className="rounded-xl"
-                />
-                {formData.requirements.length > 1 && (
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => removeListItem("requirements", index)}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <Label className="text-xs font-black uppercase tracking-widest text-zinc-400">Requirements</Label>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => addListItem("requirements")}
+                disabled={isSubmitting}
+                className="text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-black hover:bg-zinc-50"
+              >
+                + Add Item
+              </Button>
+            </div>
+            <div className="space-y-3">
+              {formData.requirements.map((item, index) => (
+                <div key={index} className="flex gap-3">
+                  <Input
+                    value={item}
+                    onChange={(e) =>
+                      updateListItem("requirements", index, e.target.value)
+                    }
+                    placeholder={`Requirement #${index + 1}`}
                     disabled={isSubmitting}
-                    className="h-10 w-10 shrink-0 text-red-600"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                )}
-              </div>
-            ))}
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => addListItem("requirements")}
-              disabled={isSubmitting}
-              className="rounded-lg"
-            >
-              Add Requirement
-            </Button>
+                    className="h-12 rounded-xl border-zinc-100 bg-zinc-50/50 focus:bg-white focus:border-black transition-all font-medium"
+                  />
+                  {formData.requirements.length > 1 && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => removeListItem("requirements", index)}
+                      disabled={isSubmitting}
+                      className="h-12 w-12 shrink-0 rounded-xl text-zinc-300 hover:text-red-600 hover:bg-red-50 transition-colors"
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Status */}
-          <div className="space-y-2">
-            <Label>Status</Label>
-            <Select
-              value={formData.status}
-              onValueChange={(value: "draft" | "published") =>
-                setFormData((prev) => ({ ...prev, status: value }))
-              }
-              disabled={isSubmitting}
-            >
-              <SelectTrigger className="rounded-xl">
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="draft">Draft</SelectItem>
-                <SelectItem value="published">Published</SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="pt-4 border-t border-zinc-50">
+            <div className="flex items-center justify-between p-6 rounded-[2rem] border border-zinc-100 bg-white shadow-sm">
+                <div className="space-y-1">
+                  <Label className="text-lg font-black text-black">Position Status</Label>
+                  <p className="text-sm text-zinc-500 font-medium">Control visibility for applicants</p>
+                </div>
+                <Select
+                  value={formData.status}
+                  onValueChange={(value: "draft" | "published") =>
+                    setFormData((prev) => ({ ...prev, status: value }))
+                  }
+                  disabled={isSubmitting}
+                >
+                  <SelectTrigger className="w-40 h-12 rounded-xl border-zinc-100 bg-zinc-50 font-bold">
+                    <SelectValue placeholder="Status" />
+                  </SelectTrigger>
+                  <SelectContent className="rounded-xl border-zinc-100">
+                    <SelectItem value="draft" className="font-bold">Draft</SelectItem>
+                    <SelectItem value="published" className="font-bold">Published</SelectItem>
+                  </SelectContent>
+                </Select>
+            </div>
           </div>
 
-          {/* Actions */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
+          {/* Footer Actions */}
+          <div className="flex items-center justify-end gap-4 pt-8 border-t border-zinc-50">
             <Button
               type="button"
-              variant="outline"
+              variant="ghost"
               onClick={onClose}
               disabled={isSubmitting}
-              className="rounded-xl"
+              className="h-14 px-8 rounded-2xl font-bold text-zinc-400 hover:text-black hover:bg-zinc-50"
             >
-              Cancel
+              Discard Changes
             </Button>
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="rounded-xl bg-[#1a1a1a] text-white shadow-apple hover:shadow-apple-hover hover:-translate-y-0.5 transition-all"
+              className="h-14 px-12 rounded-2xl bg-black text-white shadow-xl shadow-black/10 hover:bg-zinc-800 hover:-translate-y-1 transition-all duration-300 font-black text-lg"
             >
               {isSubmitting
                 ? "Saving..."
                 : job
-                ? "Update Job"
-                : "Create Job"}
+                ? "Update Opening"
+                : "Create Opening"}
             </Button>
           </div>
         </form>

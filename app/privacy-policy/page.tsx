@@ -307,7 +307,7 @@ const PrivacyPolicy = () => {
               To exercise any of these rights, please contact us at{" "}
               <a
                 href="mailto:privacy@beeclean.com"
-                className="text-primary hover:underline"
+                className="text-black font-bold hover:underline"
               >
                 privacy@beeclean.com
               </a>

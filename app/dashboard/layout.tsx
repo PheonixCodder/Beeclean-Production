@@ -23,10 +23,18 @@ export default async function DashboardLayout({
   // }
 
   return (
-    <div className="min-h-screen bg-gray-50 font-inter">
+    <div className="min-h-screen bg-white font-satoshi relative overflow-hidden">
+      {/* Background Polish */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-[radial-gradient(circle_at_center,_var(--zinc-50)_0%,_transparent_70%)] opacity-70" />
+      </div>
+
       <DashboardSidebar />
-      <main className="ml-64 min-h-screen">
-        <div className="max-w-7xl mx-auto px-6 py-8">{children}</div>
+      
+      <main className="lg:ml-64 min-h-screen relative z-10">
+        <div className="max-w-[1400px] mx-auto px-8 md:px-16 py-20">
+          {children}
+        </div>
       </main>
     </div>
   );

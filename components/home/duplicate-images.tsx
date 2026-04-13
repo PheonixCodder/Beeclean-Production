@@ -44,7 +44,7 @@ const shots = [
 
 export default function DuplicateSelector() {
   return (
-    <section className="w-full py-24 bg-white dark:bg-slate-950 overflow-hidden font-satoshi">
+    <section className="w-full py-24 bg-transparent overflow-hidden font-satoshi">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header Section */}
         <motion.div
@@ -79,7 +79,7 @@ export default function DuplicateSelector() {
                 relative rounded-3xl overflow-hidden transition-all duration-700 ease-out
                 ${
                   shot.isWinner
-                    ? "ring-4 ring-blue-500 ring-offset-4 scale-110 z-20 shadow-[0_20px_50px_rgba(59,130,246,0.3)]"
+                    ? "ring-4 ring-gray-500 ring-offset-4 scale-110 z-20 shadow-[0_20px_50px_rgba(59,130,246,0.3)]"
                     : `scale-90 grayscale-[40%] hover:grayscale-0 hover:scale-95 ${shot.opacityClass}`
                 }
               `}
@@ -102,7 +102,7 @@ export default function DuplicateSelector() {
                     animate={shot.isWinner ? { scale: 1 } : {}}
                     className={`p-2 rounded-full backdrop-blur-md shadow-xl ${
                       shot.isWinner
-                        ? "bg-blue-500/90 text-white"
+                        ? "bg-black/90 text-white"
                         : "bg-white/20 text-white/80"
                     }`}
                   >

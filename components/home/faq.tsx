@@ -2,6 +2,7 @@
 import { Plus } from "lucide-react";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 const faqData = [
   {
@@ -49,110 +50,116 @@ const FAQ = () => {
   };
 
   return (
-    <motion.div
-      className="flex flex-col gap-12 p-10 justify-center items-center min-h-screen font-satoshi mt-20"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      variants={{
-        hidden: { opacity: 0 },
-        visible: {
-          opacity: 1,
-          transition: {
-            staggerChildren: 0.15,
-            delayChildren: 0.1,
-          },
-        },
-      }}
-    >
-      <motion.div
-        className="max-w-xl text-center flex flex-col gap-4"
-        variants={{
-          hidden: { opacity: 0, y: 30 },
-          visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.6, ease: "easeOut" },
-          },
-        }}
-      >
-        <h4 className="text-5xl font-black tracking-tight">
-          Frequently asked questions
-        </h4>
-        <p className="text-lg text-muted-foreground font-medium">
-          Start free, go pro when you're ready! No limits, no pressure.
-        </p>
-      </motion.div>
+    <section className="relative w-full bg-transparent font-satoshi overflow-hidden">
+      {/* Background Polish */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-60" />
+      </div>
 
-      <motion.div
-        className="max-w-3xl min-w-full md:min-w-[48rem] mx-auto p-6 space-y-4"
-        variants={{
-          hidden: { opacity: 0 },
-          visible: {
-            opacity: 1,
-            transition: {
-              staggerChildren: 0.1,
-              delayChildren: 0.2,
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <motion.div
+          className="max-w-3xl text-center mx-auto flex flex-col gap-6 mb-24"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            hidden: { opacity: 0, y: 30 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
             },
-          },
-        }}
-      >
-        {faqData.map((faq, index) => {
-          const isOpen = openIndex === index;
-          return (
-            <motion.div
-              key={index}
-              variants={{
-                hidden: { opacity: 0, y: 30 },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                },
-              }}
-              className="relative rounded-[2rem] bg-white/40 backdrop-blur-xl border border-white/20 shadow-lg overflow-hidden"
-            >
-              <motion.button
-                onClick={() => toggleFaq(index)}
-                className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
-                whileHover={{ backgroundColor: "rgba(0,0,0,0.02)" }}
-                transition={{ duration: 0.2 }}
-              >
-                <span
-                  className={`text-lg font-medium transition-colors duration-200 ${isOpen ? "text-gray-900" : "text-gray-700"}`}
-                >
-                  {faq.question}
-                </span>
-                {/* Smoothly rotate the icon */}
-                <motion.div
-                  animate={{ rotate: isOpen ? 45 : 0 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                >
-                  <Plus className="w-5 h-5 text-gray-900" />
-                </motion.div>
-              </motion.button>
+          }}
+        >
+          <div className="inline-flex items-center justify-center gap-3 px-4 py-2 rounded-full bg-zinc-50 border border-zinc-100 shadow-sm self-center">
+             <div className="w-2 h-2 rounded-full bg-black animate-pulse" />
+             <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Common Questions</span>
+          </div>
+          <h4 className="text-5xl font-black tracking-[-0.04em] text-black leading-[0.9]">
+            Everything you <br /><span className="text-zinc-500 italic">should know.</span>
+          </h4>
+          <p className="text-xl md:text-xl text-zinc-400 font-medium leading-tight tracking-tight max-w-lg mx-auto">
+            Find answers to common questions about storage optimization, privacy, and Bee.
+          </p>
+        </motion.div>
 
-              <AnimatePresence initial={false}>
-                {isOpen && (
-                  <motion.div
-                    key="content"
-                    initial={{ height: 0, opacity: 0, y: 10 }}
-                    animate={{ height: "auto", opacity: 1, y: 0 }}
-                    exit={{ height: 0, opacity: 0, y: 10 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                  >
-                    <div className="px-6 pb-6">
-                      <p className="text-gray-500 leading-relaxed max-w-[90%]">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  </motion.div>
+        <motion.div
+          className="max-w-4xl mx-auto space-y-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.1,
+                delayChildren: 0.2,
+              },
+            },
+          }}
+        >
+          {faqData.map((faq, index) => {
+            const isOpen = openIndex === index;
+            return (
+              <motion.div
+                key={index}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                className={cn(
+                  "relative rounded-[2.5rem] transition-all duration-500 overflow-hidden border",
+                  isOpen 
+                    ? "bg-white border-zinc-200 shadow-apple-hover" 
+                    : "bg-zinc-50 border-transparent hover:bg-zinc-100/50 hover:border-zinc-100"
                 )}
-              </AnimatePresence>
-            </motion.div>
-          );
-        })}
-      </motion.div>
-    </motion.div>
+              >
+                <button
+                  onClick={() => toggleFaq(index)}
+                  className="w-full flex items-center justify-between p-10 text-left focus:outline-none"
+                >
+                  <span className={cn(
+                    "text-2xl font-black tracking-tight transition-colors duration-500",
+                    isOpen ? "text-black" : "text-zinc-400"
+                  )}>
+                    {faq.question}
+                  </span>
+                  <motion.div
+                    animate={{ rotate: isOpen ? 45 : 0 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className={cn(
+                      "p-3 rounded-full transition-colors duration-500",
+                      isOpen ? "bg-black text-white" : "bg-white text-zinc-400 shadow-sm"
+                    )}
+                  >
+                    <Plus className="w-6 h-6" />
+                  </motion.div>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key="content"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <div className="px-10 pb-10">
+                        <p className="text-xl font-medium text-zinc-500 leading-relaxed max-w-3xl">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </div>
+    </section>
   );
 };
 
