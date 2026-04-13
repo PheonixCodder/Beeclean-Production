@@ -15,6 +15,7 @@ import { DashboardBlogCard } from "@/components/dashboard/blog-card";
 import { useDashboardBlogs } from "@/hooks/dashboard/use-dashboard-blogs";
 import { BlogEditor } from "./components/blog-editor";
 import { Blog } from "@/hooks/dashboard/use-dashboard-blogs";
+import { FileText } from "lucide-react";
 
 const ALL_STATUS = "All";
 
@@ -81,20 +82,24 @@ export default function DashboardBlogsPage() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <motion.div className="mb-8">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <motion.div className="mb-20" >
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div>
-            <h1 className="text-5xl font-black tracking-tight text-gray-900">
-              Blog Management
+            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-zinc-50 border border-zinc-100 shadow-sm mb-8">
+               <div className="w-2 h-2 rounded-full bg-black animate-pulse" />
+               <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Content Management</span>
+            </div>
+            <h1 className="text-6xl md:text-6xl font-black tracking-tight text-[#1a1a1a] leading-[1.1] font-satoshi">
+              Blogs
             </h1>
-            <p className="text-lg text-gray-600 mt-2">
-              Create, edit, and manage your blog posts
+            <p className="font-semibold text-xl text-foreground/85 mt-6 leading-relaxed max-w-xl">
+              Manage your technical articles, insights, and device deep-dives.
             </p>
           </div>
           <Button
-            size="lg"
+            size="sm"
             onClick={handleCreate}
-            className="rounded-xl bg-[#1a1a1a] text-white shadow-apple hover:shadow-apple-hover hover:-translate-y-0.5 transition-all"
+            className="h-20 px-12 rounded-2xl bg-black text-white shadow-[0_20px_50px_rgba(0,0,0,0.15)] hover:bg-zinc-800 transition-all duration-300 font-black uppercase tracking-widest text-xs font-satoshi"
           >
             Create New Blog
           </Button>
@@ -102,56 +107,74 @@ export default function DashboardBlogsPage() {
       </motion.div>
 
       {/* Filters */}
-      <motion.div className="mb-6">
-        <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
+      <motion.div className="mb-12" >
+        <div className="flex flex-col md:flex-row gap-8 items-start md:items-center p-8 bg-zinc-50/50 border border-zinc-100 rounded-[2.5rem]">
           <Tabs
             value={selectedStatus}
             onValueChange={(value) =>
               setStatusParam(value === ALL_STATUS ? null : value)
             }
+            className="w-full md:w-auto"
           >
-            <TabsList className="rounded-xl bg-gray-100">
-              <TabsTrigger value="All" className="rounded-lg">
+            <TabsList className="h-14 rounded-2xl bg-white border border-zinc-100 p-1.5 shadow-sm">
+              <TabsTrigger value="All" className="rounded-xl px-8 font-black uppercase tracking-widest text-[10px] text-zinc-300 data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:shadow-xl transition-all duration-300">
                 All
               </TabsTrigger>
-              <TabsTrigger value="draft" className="rounded-lg">
+              <TabsTrigger value="draft" className="rounded-xl px-8 font-black uppercase tracking-widest text-[10px] text-zinc-300 data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:shadow-xl transition-all duration-300">
                 Drafts
               </TabsTrigger>
-              <TabsTrigger value="published" className="rounded-lg">
+              <TabsTrigger value="published" className="rounded-xl px-8 font-black uppercase tracking-widest text-[10px] text-zinc-300 data-[state=active]:bg-black data-[state=active]:text-white data-[state=active]:shadow-xl transition-all duration-300">
                 Published
               </TabsTrigger>
             </TabsList>
           </Tabs>
 
-          <Input
-            placeholder="Search blogs..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="max-w-sm rounded-xl border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20"
-          />
+          <div className="relative flex-1 max-w-md w-full">
+            <Input
+              placeholder="Search posts..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="h-14 rounded-2xl border-zinc-100 bg-white focus:border-black focus:ring-black/5 font-medium pl-6 text-lg tracking-tight"
+            />
+          </div>
         </div>
       </motion.div>
 
       {/* Blog List */}
-      <div className="space-y-4">
+      <div className="space-y-8">
         {isLoading ? (
-          <div className="flex items-center justify-center py-20">
+          <div className="flex items-center justify-center py-40 bg-zinc-50/50 rounded-[3rem] border-2 border-dashed border-zinc-100">
             <div className="text-center">
-              <div className="w-10 h-10 border-4 border-gray-200 border-t-primary rounded-full animate-spin mx-auto mb-4" />
-              <p className="text-gray-600">Loading blogs...</p>
+              <div className="w-16 h-16 border-4 border-zinc-100 border-t-black rounded-full animate-spin mx-auto mb-8 shadow-sm" />
+              <p className="text-black font-black uppercase tracking-widest text-xs">Accessing content...</p>
+              <p className="text-zinc-400 font-medium text-lg leading-tight tracking-tight mt-3">Loading your blogs.</p>
             </div>
           </div>
         ) : searchFiltered.length === 0 ? (
-          <div className="text-center py-20 bg-white rounded-3xl border border-gray-100">
-            <p className="text-lg text-gray-600 mb-2">
-              {searchQuery
-                ? `No blogs found matching "${searchQuery}"`
-                : `No ${selectedStatus === "All" ? "" : selectedStatus} blogs yet`}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-center py-40 bg-white rounded-[3rem] border border-zinc-100 shadow-sm"
+          >
+            <div className="w-20 h-20 bg-zinc-50 rounded-2xl flex items-center justify-center mx-auto mb-8">
+              <FileText className="w-8 h-8 text-zinc-200" />
+            </div>
+            <p className="text-black font-black uppercase tracking-widest text-xs mb-3">
+              {searchQuery ? "No matches found" : "No content yet"}
             </p>
-            <Button onClick={handleCreate} variant="link" className="mt-2">
-              Create your first blog
+            <p className="text-zinc-400 font-medium text-xl leading-tight tracking-tight mb-12 max-w-xs mx-auto">
+              {searchQuery
+                ? `We couldn't find any blogs matching "${searchQuery}"`
+                : `Start your journey by creating your first blog post.`}
+            </p>
+            <Button 
+            size="sm"
+              onClick={handleCreate} 
+              className="h-16 px-10 rounded-2xl bg-black text-white hover:bg-zinc-800 shadow-xl shadow-black/10 font-black uppercase tracking-widest text-xs"
+            >
+              Create first post
             </Button>
-          </div>
+          </motion.div>
         ) : (
           searchFiltered.map((blog) => (
             <DashboardBlogCard

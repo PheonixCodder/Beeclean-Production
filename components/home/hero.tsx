@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import { AppStoreButton } from "../ui/app-store-button";
 
 const Hero = () => {
   return (
@@ -32,19 +33,6 @@ const Hero = () => {
           },
         }}
       >
-        {/* App Store Badge */}
-        <motion.div
-          variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-          }}
-        >
-          <Badge className="mb-8 text-sm px-4 py-4 text-foreground/85 rounded-full bg-slate-100 hover:bg-slate-100 border-none flex gap-2 items-center font-bold">
-            <img src="/store.png" width={15} alt="" />
-            200k downloads on AppStore
-          </Badge>
-        </motion.div>
-
         {/* Main Heading */}
         <motion.h1
           className="text-6xl md:text-6xl font-black tracking-tight text-[#1a1a1a] leading-[1.1]"
@@ -88,15 +76,16 @@ const Hero = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
       >
-        <img src={"/bee-store-2.png"} width={40} className="-mb-1.5 z-30" />
+        <motion.img
+          src={"/bee-store-2.png"}
+          width={40}
+          className="-mb-1.5 z-30"
+        />
         <motion.div
           whileHover={{ scale: 1.02, y: -2 }}
           whileTap={{ scale: 0.98 }}
         >
-          <Button className="py-4.5 px-4 flex items-center rounded-xl cursor-pointer bg-[#1a1a1a] text-white hover:bg-black shadow-apple hover:shadow-apple-hover transition-all duration-200 hover:-translate-y-0.5 active:scale-95 text-[13px] font-bold tracking-tight">
-            <img src={"/apple.svg"} width={20} alt="apple" className="mb-1" />
-            Download for iPhone
-          </Button>
+          <AppStoreButton />
         </motion.div>
       </motion.div>
     </motion.div>

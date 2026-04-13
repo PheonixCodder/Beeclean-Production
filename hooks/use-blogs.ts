@@ -12,6 +12,11 @@ export interface BlogData {
   thumbnail: string | null;
   publishedAt: string;
   readTime: string | null;
+  author?: {
+    name: string;
+    avatar: string;
+  };
+  featured?: boolean;
 }
 
 const fetchBlogs = async (): Promise<BlogData[]> => {

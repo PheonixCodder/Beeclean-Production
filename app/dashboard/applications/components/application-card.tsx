@@ -40,11 +40,11 @@ interface ApplicationCardProps {
   onDelete: (id: string) => void;
 }
 
-const statusColors: Record<string, string> = {
-  pending: "bg-yellow-100 text-yellow-700 hover:bg-yellow-200",
-  reviewed: "bg-blue-100 text-blue-700 hover:bg-blue-200",
-  accepted: "bg-green-100 text-green-700 hover:bg-green-200",
-  rejected: "bg-red-100 text-red-700 hover:bg-red-200",
+const statusStyles: Record<string, string> = {
+  pending: "bg-white text-zinc-400 border-zinc-100 shadow-sm",
+  reviewed: "bg-zinc-50 text-black border-zinc-100 shadow-sm",
+  accepted: "bg-black text-white border-black shadow-xl",
+  rejected: "bg-zinc-100 text-zinc-300 border-transparent",
 };
 
 export function ApplicationCard({
@@ -67,37 +67,36 @@ export function ApplicationCard({
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       >
-        <Card className="rounded-2xl border border-gray-100 shadow-sm bg-white hover:shadow-md transition-all duration-200">
-          <CardContent className="p-5">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1 min-w-0">
+        <Card className="rounded-[2.5rem] border border-zinc-100 shadow-sm bg-zinc-50/50 hover:bg-white hover:border-zinc-200 hover:shadow-apple-hover transition-all duration-500 group">
+          <CardContent className="p-10">
+            <div className="flex items-start justify-between gap-10">
+              <div className="flex-1 min-w-0 font-satoshi">
                 {/* Header: Name & Job */}
-                <div className="flex flex-col md:flex-row md:items-center gap-2 mb-3">
-                  <h3 className="text-lg font-bold text-gray-900">
+                <div className="flex flex-col md:flex-row md:items-center gap-6 mb-6">
+                  <h3 className="text-3xl font-black text-black tracking-[-0.03em] group-hover:underline decoration-zinc-100 decoration-4 underline-offset-8 transition-all">
                     {application.name}
                   </h3>
-                  <span className="text-gray-400 hidden md:inline">•</span>
-                  <p className="text-sm text-gray-600 line-clamp-1">
+                  <Badge variant="secondary" className="bg-zinc-100 text-zinc-400 border-transparent rounded-full px-4 py-1.5 font-black text-[9px] uppercase tracking-widest w-fit">
                     {application.jobTitle}
-                  </p>
+                  </Badge>
                 </div>
 
                 {/* Contact Info */}
-                <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-3">
+                <div className="flex flex-wrap gap-8 text-xs font-black uppercase tracking-widest text-zinc-300 mb-8">
                   <a
                     href={`mailto:${application.email}`}
-                    className="flex items-center gap-1 hover:text-primary transition-colors"
+                    className="flex items-center gap-2 text-zinc-400 hover:text-black transition-colors"
                   >
-                    <Mail className="h-4 w-4" />
+                    <Mail className="h-4 w-4" strokeWidth={2} />
                     {application.email}
                   </a>
                   {application.phone && (
-                    <div className="flex items-center gap-1">
-                      <Phone className="h-4 w-4" />
+                    <div className="flex items-center gap-2 text-zinc-400">
+                      <Phone className="h-4 w-4" strokeWidth={2} />
                       {application.phone}
                     </div>
                   )}
@@ -106,26 +105,26 @@ export function ApplicationCard({
                       href={application.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-blue-600 hover:underline"
+                      className="flex items-center gap-2 text-black hover:opacity-70 transition-opacity"
                     >
                       <FaLinkedin className="h-4 w-4" />
-                      LinkedIn
+                      LinkedIn Profile
                     </a>
                   )}
                 </div>
 
                 {/* Status & Date */}
-                <div className="flex flex-wrap items-center gap-3 mb-2">
+                <div className="flex flex-wrap items-center gap-6 mb-8">
                   <Badge
                     variant="secondary"
-                    className={`${statusColors[application.status]} border-none`}
+                    className={`${statusStyles[application.status]} rounded-full px-5 py-2 text-[9px] font-black uppercase tracking-widest border transition-all duration-300`}
                   >
-                    {application.status.charAt(0).toUpperCase() +
-                      application.status.slice(1)}
+                    <div className={`w-1.5 h-1.5 rounded-full mr-2 ${application.status === 'accepted' ? 'bg-white animate-pulse' : 'bg-current opacity-30'}`} />
+                    {application.status}
                   </Badge>
-                  <span className="text-xs text-gray-400">
-                    Applied{" "}
-                    {new Date(application.createdAt).toLocaleDateString("en-US", {
+                  <span className="text-[10px] font-black text-zinc-200 uppercase tracking-widest flex items-center gap-2">
+                    <div className="w-1 h-1 rounded-full bg-zinc-100" />
+                    Applied • {new Date(application.createdAt).toLocaleDateString("en-US", {
                       month: "short",
                       day: "numeric",
                       year: "numeric",
@@ -133,64 +132,63 @@ export function ApplicationCard({
                   </span>
                 </div>
 
-                {/* Resume */}
+                {/* Resume Button */}
                 {application.resumeUrl && (
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <FileText className="h-4 w-4" />
+                  <div className="inline-block">
                     <a
                       href={application.resumeUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary hover:underline"
+                      className="flex items-center gap-4 px-6 py-4 rounded-2xl bg-white border border-zinc-100 group/resume hover:border-black hover:shadow-xl transition-all duration-300"
                     >
-                      {application.resumeUrl.split('/').pop()}
+                      <div className="p-2 rounded-xl bg-black transition-transform group-hover/resume:scale-110">
+                         <FileText className="h-4 w-4 text-white" />
+                      </div>
+                      <span className="text-[10px] font-black text-black uppercase tracking-widest">
+                        View Dossier / Resume
+                      </span>
                     </a>
                   </div>
-                )}
-
-                {/* Message preview */}
-                {application.message && (
-                  <p className="text-sm text-gray-600 mt-2 line-clamp-2">
-                    {application.message}
-                  </p>
                 )}
               </div>
 
               {/* Actions */}
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col gap-3">
                 <Select
                   value={application.status}
                   onValueChange={handleStatusChange}
                 >
-                  <SelectTrigger className="h-8 w-[130px] rounded-lg text-xs">
+                  <SelectTrigger className="h-14 w-[160px] rounded-2xl border-zinc-100 bg-white font-black text-[9px] uppercase tracking-widest shadow-sm hover:border-zinc-200 transition-all">
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="reviewed">Reviewed</SelectItem>
-                    <SelectItem value="accepted">Accepted</SelectItem>
-                    <SelectItem value="rejected">Rejected</SelectItem>
+                  <SelectContent className="rounded-2xl border-zinc-100 font-satoshi p-2">
+                    <SelectItem value="pending" className="font-black uppercase tracking-widest text-[9px] py-3 rounded-xl">Pending</SelectItem>
+                    <SelectItem value="reviewed" className="font-black uppercase tracking-widest text-[9px] py-3 rounded-xl">Reviewed</SelectItem>
+                    <SelectItem value="accepted" className="font-black uppercase tracking-widest text-[9px] py-3 rounded-xl text-green-600">Accepted</SelectItem>
+                    <SelectItem value="rejected" className="font-black uppercase tracking-widest text-[9px] py-3 rounded-xl text-red-600">Rejected</SelectItem>
                   </SelectContent>
                 </Select>
 
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => onView(application)}
-                  className="h-8 px-3"
-                  title="View Details"
-                >
-                  <Eye className="h-4 w-4" />
-                </Button>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => setShowDeleteDialog(true)}
-                  className="h-8 px-3 text-red-600 hover:text-red-700 hover:bg-red-50"
-                  title="Delete"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => onView(application)}
+                    className="flex-1 h-14 rounded-2xl bg-white border border-zinc-100 shadow-sm hover:bg-black hover:text-white hover:border-black hover:shadow-xl transition-all duration-300 group/btn"
+                    title="View Details"
+                  >
+                    <Eye className="h-5 w-5 transition-transform group-hover/btn:scale-110" strokeWidth={1.5} />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => setShowDeleteDialog(true)}
+                    className="flex-1 h-14 rounded-2xl bg-white border border-zinc-100 shadow-sm text-zinc-300 hover:text-white hover:bg-black hover:border-black hover:shadow-xl transition-all duration-300 group/del"
+                    title="Delete"
+                  >
+                    <Trash2 className="h-5 w-5 transition-transform group-hover/del:scale-110" strokeWidth={1.5} />
+                  </Button>
+                </div>
               </div>
             </div>
           </CardContent>
@@ -198,21 +196,20 @@ export function ApplicationCard({
       </motion.div>
 
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="rounded-[2.5rem] p-10 font-satoshi border-zinc-100">
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Application</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to delete this application from{" "}
-              {application.name}? This action cannot be undone.
+            <AlertDialogTitle className="text-3xl font-black text-black tracking-tight">Erase Candidate?</AlertDialogTitle>
+            <AlertDialogDescription className="text-xl text-zinc-400 font-medium leading-tight tracking-tight mt-4">
+              Are you sure you want to delete the application from <span className="text-black font-black">{application.name}</span>? This decision is final.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogFooter className="mt-12 gap-4">
+            <AlertDialogCancel className="h-14 px-8 rounded-2xl border-zinc-100 font-black uppercase tracking-widest text-[10px] hover:bg-zinc-50 transition-all">Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="h-14 px-8 rounded-2xl bg-black text-white hover:bg-zinc-800 shadow-xl shadow-black/10 font-black uppercase tracking-widest text-[10px] transition-all"
             >
-              Delete
+              Confirm Erasure
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

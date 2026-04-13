@@ -71,7 +71,7 @@ export default function BlogPostClient({ blog, slug }: BlogPostClientProps) {
           </motion.div>
 
           <motion.h1
-            className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-gray-900 leading-[1.1]"
+            className="text-6xl md:text-6xl font-black tracking-tight text-[#1a1a1a] leading-[1.1]"
             variants={{
               hidden: { opacity: 0, y: 30 },
               visible: {
@@ -95,7 +95,7 @@ export default function BlogPostClient({ blog, slug }: BlogPostClientProps) {
                 },
               }}
             >
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-4xl font-medium">
+              <p className="text-xl font-semibold text-foreground/85 leading-relaxed max-w-4xl tracking-tight">
                 {blog.description}
               </p>
             </motion.div>

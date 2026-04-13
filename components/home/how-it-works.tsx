@@ -1,189 +1,221 @@
-  "use client";
-  import React, { useRef } from "react";
-  import { motion, useScroll, useTransform } from "framer-motion";
-  import { useGSAP } from "@gsap/react";
-  import gsap from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
+"use client";
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { cn } from "@/lib/utils";
 
-  const HowItWorks = () => {
-    gsap.registerPlugin(ScrollTrigger);
-    const container = useRef(null);
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
-    useGSAP(
-      () => {
-        const cards = document.querySelectorAll(".card");
-        const leftBoxes = document.querySelectorAll(".left-box");
-        const rightBoxes = document.querySelectorAll(".right-box");
+const steps = [
+  {
+    id: "01",
+    title: "AI Mascot Bee",
+    accent: "text-primary",
+    accentBg: "bg-primary/10",
+    desc: "Our unique AI-powered bee mascot guides users through the cleaning process with interactive animations and personalized recommendations.",
+    features: [
+      {
+        value: "item-1",
+        trigger: "Interactive Guide",
+        content: "The bee mascot provides real-time tips and walks users through each optimization step with engaging animations.",
+      },
+      {
+        value: "item-2",
+        trigger: "Personalized Recommendations",
+        content: "Based on device usage patterns, the AI suggests customized cleaning schedules and optimization techniques.",
+      },
+    ],
+  },
+  {
+    id: "02",
+    title: "Content Management System",
+    accent: "text-chart-2",
+    accentBg: "bg-chart-2/10",
+    desc: "Manage blog content with rich formatting, tagging, and categorization through an intuitive admin dashboard.",
+    features: [
+      {
+        value: "item-1",
+        trigger: "Rich Content Editor",
+        content: "Create and edit blog posts with DOMPurify sanitization for secure HTML content including images, code blocks, and formatting.",
+      },
+      {
+        value: "item-2",
+        trigger: "Tag & Category System",
+        content: "Organize content with tags and categories for easy filtering and discovery. Automatic slug generation and SEO optimization.",
+      },
+    ],
+  },
+  {
+    id: "03",
+    title: "Job Application System",
+    accent: "text-chart-3",
+    accentBg: "bg-chart-3/10",
+    desc: "Streamline job applications with resume upload, status tracking, and admin review workflow for efficient hiring.",
+    features: [
+      {
+        value: "item-1",
+        trigger: "Resume Upload & Validation",
+        content: "Secure file upload with magic bytes validation for PDF/DOC/DOCX files, size limits, and automatic safe filename generation.",
+      },
+      {
+        value: "item-2",
+        trigger: "Admin Review Workflow",
+        content: "Track application status (pending, reviewed, accepted, rejected) with admin-only access to review and update application status.",
+      },
+    ],
+  },
+];
 
-        // Initial State: Only the first set of text is visible
-        gsap.set([leftBoxes, rightBoxes], { height: 0, opacity: 0 });
-        gsap.set([leftBoxes[0], rightBoxes[0]], { height: "auto", opacity: 1 });
+export default function MobileStack() {
+  const container = useRef(null);
 
-        // Initial Card Positions
-        gsap.set(cards[0], { x: "0%", y: "0%" });
-        gsap.set(cards[1], { x: "100%", y: "0%" });
-        gsap.set(cards[2], { x: "0%", y: "100%" });
-
-        const scrollTimeline = gsap.timeline({
+  useGSAP(
+    () => {
+      const cards = gsap.utils.toArray(".card-item") as any[];
+      cards.forEach((card: any, i: number) => {
+        // Fade in and scale down slightly as it reaches sticky position
+        gsap.to(card, {
           scrollTrigger: {
-            trigger: container.current,
-            start: "top top",
-            // Increase this number to slow down the overall animation
-            end: "+=1500",
-            pin: ".sticky-cards",
-            // Increase this for more "weight" or smoothing
-            scrub: 2,
-            pinSpacing: true,
-            anticipatePin: 1,
+            trigger: card,
+            start: "top 80%",
+            end: "top 10%",
+            scrub: true,
           },
+          scale: 0.95,
+          opacity: 1,
         });
 
-        // STEP 1: Move to Screen 2
-        scrollTimeline.to(cards[1], {
-          x: "0%",
-          ease: "power2.inOut",
-          duration: 1,
-        });
-        // Hide Screen 1 Text
-        scrollTimeline.to(
-          [leftBoxes[0], rightBoxes[0]],
-          { height: 0, opacity: 0, duration: 0.5 },
-          "<",
-        );
-        // Show Screen 2 Text
-        scrollTimeline.to(
-          [leftBoxes[1], rightBoxes[1]],
-          { height: "auto", opacity: 1, duration: 0.5 },
-          "<",
-        );
+        // Fade out as the next card approaches
+        if (i < cards.length - 1) {
+          gsap.to(card, {
+            scrollTrigger: {
+              trigger: cards[i + 1],
+              start: "top 90%",
+              end: "top 40%",
+              scrub: true,
+            },
+            opacity: 0,
+            pointerEvents: "none",
+          });
+        }
+      });
+    },
+    { scope: container },
+  );
 
-        // STEP 2: Move to Screen 3
-        scrollTimeline.to(cards[2], { y: "0%", ease: "power2.out", duration: 1 });
-        // Hide Screen 2 Text
-        scrollTimeline.to(
-          [leftBoxes[1], rightBoxes[1]],
-          { height: 0, opacity: 0, duration: 0.5 },
-          "<",
-        );
-        // Show Screen 3 Text
-        scrollTimeline.to(
-          [leftBoxes[2], rightBoxes[2]],
-          { height: "auto", opacity: 1, duration: 0.5 },
-          "<",
-        );
-      },
-      { scope: container },
-    );
-    const { scrollYProgress: rippleProgress } = useScroll({
-      target: container,
-      offset: ["start end", "center center"],
-    });
-
-    const rippleOpacity = useTransform(rippleProgress, [0, 0.5, 1], [0, 0.3, 0]);
-
-    const content = [
-      {
-        title: "Scan your phone",
-        desc: "Bee analyzes your entire photo library to find duplicates, similar images, screenshots, and videos cluttering your storage.",
-      },
-      {
-        title: "Review what’s found",
-        desc: "See exactly what’s taking up space with smart categories: duplicates, similar photos, screenshots, videos, and more.",
-      },
-      {
-        title: "Clean with one tap",
-        desc: "Remove clutter instantly, compress videos, merge contacts, or unsubscribe from junk emails—all in one place.",
-      },
-    ];
-
-    return (
-      <div className="flex flex-col items-center font-satoshi">
-        <motion.div
-          ref={container}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-          className="relative w-full mt-14"
-        >
-          <div className="sticky-cards">
-            <section className=" h-screen w-full flex justify-center items-center overflow-hidden relative z-10">
-              {/* Background & Ripples (Kept from original) */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                {[25, 35, 25].map((thickness, index) => (
-                  <motion.div
-                    key={index}
-                    style={{
-                      scale: useTransform(
-                        rippleProgress,
-                        [0, 1],
-                        [0.4, 1.2 + index * 0.8],
-                      ),
-                      opacity: rippleOpacity,
-                    }}
-                    className={`absolute w-[450px] h-[450px] md:w-[700px] md:h-[700px] rounded-full border-[${thickness}px] border-white/10 blur-sm bg-transparent`}
-                  />
-                ))}
-              </div>
-
-              <div className="hidden lg:flex flex-col items-end w-64">
-                {content.map((item, i) => (
-                  <div key={i} className="left-box overflow-hidden">
-                    <h2 className="text-4xl z-50 font-bold text-gray-900 tracking-tight">
-                      {item.title}
-                    </h2>
-                  </div>
-                ))}
-              </div>
-
-              {/* CENTER: Phone Frame */}
-              <div className="relative w-[280px] h-[520px] lg:w-[200px] lg:h-[550px]">
-                <div className="absolute inset-0 z-50 pointer-events-none">
-                  <img
-                    src="/frame.png"
-                    alt="frame"
-                    className="w-full h-full object-contain"
-                  />
+  return (
+    <div ref={container} className="bg-transparent font-satoshi mt-50">
+      <motion.div
+        className="max-w-xl mx-auto text-center flex flex-col gap-4"
+        variants={{
+          hidden: { opacity: 0, y: 30 },
+          visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.6, ease: "easeOut" },
+          },
+        }}
+      >
+        <h4 className="text-5xl font-black tracking-tight">How Beeclean Works</h4>
+        <p className="text-lg text-muted-foreground font-medium">
+          Start free, go pro when you’re ready! No limits, no pressure.
+        </p>
+      </motion.div>
+      <div className="flex flex-col">
+        {steps.map((step, i) => (
+          <div
+            key={i}
+            className={cn(
+              "card-item sticky top-0 w-full h-screen flex items-center",
+              i !== 0 && "border-t border-border",
+            )}
+            style={{ zIndex: i + 1 }}
+          >
+            <div className="max-w-[1400px] mx-auto px-12 w-full grid grid-cols-12 gap-12 items-center">
+              {/* Left Column */}
+              <div className="col-span-4 space-y-6">
+                <div
+                  className={`inline-block px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase ${step.accentBg} ${step.accent}`}
+                >
+                  Step {step.id}
                 </div>
-                <div className="absolute inset-[10px] overflow-hidden rounded-[2.5rem] md:rounded-[3.2rem]">
-                  <div className="card absolute inset-0 w-full h-full z-10 will-change-transform">
-                    <img
-                      className="w-[100%] h-full object-contain"
-                      src="/front.png"
-                      alt="1"
-                    />
-                  </div>
-                  <div className="card absolute inset-0 w-full h-full z-20 will-change-transform">
-                    <img
-                      className="w-full h-full object-contain"
-                      src="/hero-2.png"
-                      alt="2"
-                    />
-                  </div>
-                  <div className="card absolute inset-0 w-full h-full z-30 will-change-transform">
-                    <img
-                      className="w-full h-full object-contain"
-                      src="/hero-3.png"
-                      alt="3"
-                    />
+                <h2 className="text-6xl font-bold tracking-tighter text-foreground leading-[1.1]">
+                  {step.title}
+                </h2>
+                <p className="text-muted-foreground text-lg leading-relaxed max-w-sm">
+                  {step.desc}
+                </p>
+              </div>
+
+              {/* Center Column: Mobile Frame */}
+              <div className="col-span-4 flex justify-center">
+                <div className="relative w-[300px] h-[600px] bg-card rounded-[3.2rem] border-[10px] border-secondary shadow-apple ring-1 ring-border overflow-hidden transition-transform duration-500 hover:scale-[1.02]">
+                  {/* Dynamic Island Area */}
+                  <div className="absolute top-3 left-1/2 -translate-x-1/2 w-28 h-7 bg-secondary rounded-full z-20" />
+
+                  {/* Screen Interior */}
+                  <div className="absolute inset-0 bg-muted/20 flex flex-col p-6 pt-16">
+                    <div
+                      className={`w-12 h-12 rounded-2xl ${step.accentBg} ${step.accent} flex items-center justify-center mb-8`}
+                    >
+                      <div className="w-5 h-5 rounded-md border-2 border-current" />
+                    </div>
+                    <div className="space-y-4 mb-8">
+                      <div className="h-3 w-full bg-foreground/10 rounded-full" />
+                      <div className="h-3 w-2/3 bg-foreground/5 rounded-full" />
+                    </div>
+                    <div className="grid grid-cols-1 gap-4">
+                      <div className="h-32 rounded-2xl bg-card border border-border shadow-sm flex items-center justify-center">
+                        <div className="w-1/2 h-2 bg-muted rounded-full" />
+                      </div>
+                      <div className="h-32 rounded-2xl bg-card border border-border shadow-sm flex items-center justify-center">
+                        <div className="w-1/2 h-2 bg-muted rounded-full" />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* RIGHT SIDE: H2 Headings */}
-              <div className="hidden lg:flex flex-col items-start w-64 ml-10">
-                {content.map((item, i) => (
-                  <div key={i} className="right-box overflow-hidden">
-                    <p className="text-right text-gray-600 text-lg leading-relaxed">
-                      {item.desc}
-                    </p>
-                  </div>
-                ))}
+              {/* Right Column: Themed Accordion */}
+              <div className="col-span-4">
+                <Accordion
+                  type="single"
+                  collapsible
+                  defaultValue="item-1"
+                  className="w-full space-y-4"
+                >
+                  {step.features.map((feature) => (
+                    <AccordionItem
+                      key={feature.value}
+                      value={feature.value}
+                      className="border border-border bg-card/50 px-6 rounded-3xl backdrop-blur-xl shadow-sm data-[state=open]:ring-2 data-[state=open]:ring-primary/20 transition-all"
+                    >
+                      <AccordionTrigger className="text-xl font-bold py-6 hover:no-underline text-foreground">
+                        {feature.trigger}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-muted-foreground text-base leading-relaxed pb-6">
+                        {feature.content}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
               </div>
-            </section>
+            </div>
           </div>
-        </motion.div>
+        ))}
       </div>
-    );
-  };
-
-  export default HowItWorks;
+      {/* Bottom spacer for the last sticky item */}
+      <div className="h-[20vh] bg-transparent" />
+    </div>
+  );
+}

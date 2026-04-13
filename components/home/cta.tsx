@@ -1,123 +1,141 @@
 "use client";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 
-const CTA = () => {
-  return (
-    <motion.section
-      className="flex flex-col items-center justify-center py-20 px-4 text-center font-satoshi"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={{
-        hidden: { opacity: 0 },
-        visible: {
-          opacity: 1,
-          transition: {
-            staggerChildren: 0.15,
-            delayChildren: 0.2,
-          },
-        },
-      }}
-    >
-      {/* App Icon with Crown Image */}
-      <motion.div
-        className="relative mb-8"
-        variants={{
-          hidden: { opacity: 0, scale: 0.8 },
-          visible: {
-            opacity: 1,
-            scale: 1,
-            transition: { type: "spring", stiffness: 200, damping: 20 },
-          },
-        }}
-      >
-        <img src="/logo.svg" alt="Beeclean Logo" className="w-20 h-20" />
-        {/* Crown Image overlay */}
-        <motion.img
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{
-            delay: 0.5,
-            duration: 0.6,
-            type: "spring",
-            stiffness: 300,
-          }}
-          src="/crown.png"
-          alt="Crown"
-          className="absolute -top-10 -right-6 w-16 h-16 rotate-20"
+import Image from "next/image";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useRef } from "react";
+import { AppStoreButton } from "@/components/ui/app-store-button";
+
+export default function PhotoCleanupHero() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end center"],
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+  });
+
+  const leftPhoneX = useTransform(smoothProgress, [0, 1], [0, -240]);
+  const leftPhoneRotate = useTransform(smoothProgress, [0, 1], [0, -12]);
+
+  const rightPhoneX = useTransform(smoothProgress, [0, 1], [0, 240]);
+  const rightPhoneRotate = useTransform(smoothProgress, [0, 1], [0, 12]);
+
+  // Reusable Phone Frame Component
+  const PhoneFrame = ({
+    src,
+    alt,
+    className = "",
+  }: {
+    src: string;
+    alt: string;
+    className?: string;
+  }) => (
+    <div className={`relative w-[280px] md:w-[320px] aspect-[9/19] ${className}`}>
+      {/* Frame Shadow */}
+      <div className="absolute inset-0 z-0 bg-white/5 blur-3xl scale-90 translate-y-10 rounded-[3rem]" />
+      
+      {/* The Physical Frame PNG */}
+      <img
+        src="/frame.png"
+        alt="Frame"
+        className="absolute inset-0 z-30 w-full h-full object-contain pointer-events-none drop-shadow-2xl"
+      />
+      {/* The Screen Content */}
+      <div className="absolute inset-0 z-10 w-full h-[97%] mt-3 rounded-[2.8rem] overflow-hidden">
+        <img
+          src={src}
+          alt={alt}
+          className="w-[91.5%] h-full mt-0 ml-[16px] rounded-[2.8rem] object-cover"
         />
-      </motion.div>
-
-      {/* App Store Stats Badge */}
-      <motion.div
-        variants={{
-          hidden: { opacity: 0, y: 20 },
-          visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-        }}
-        className="flex items-center gap-2 bg-gray-100 px-4 py-1.5 rounded-full mb-8"
-      >
-        <img src="/store.png" alt="App Store" className="w-4 h-4" />
-        <span className="text-[13px] font-medium tracking-tight text-gray-600">
-          200k downloads on AppStore
-        </span>
-      </motion.div>
-
-      {/* Title & Description */}
-      <motion.div
-        className="max-w-2xl mb-10"
-        variants={{
-          hidden: { opacity: 0, y: 30 },
-          visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.6, ease: "easeOut" },
-          },
-        }}
-      >
-        <h1 className="text-4xl md:text-4xl font-extrabold tracking-tight text-black mb-6">
-          The smartest way to keep your phone clean
-        </h1>
-        <motion.p
-          variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: { duration: 0.5, delay: 0.1, ease: "easeOut" },
-            },
-          }}
-          className="text-lg md:text-xl text-gray-600 leading-relaxed font-medium"
-        >
-          Join thousands who trust BeeClean to remove duplicates, organize
-          photos, <br className="hidden md:block" />
-          clean videos, detox their inbox, and reclaim valuable storage.
-        </motion.p>
-      </motion.div>
-
-      {/* Download Button */}
-      <motion.div
-        variants={{
-          hidden: { opacity: 0, y: 30 },
-          visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.5, delay: 0.2, ease: "easeOut" },
-          },
-        }}
-      >
-        <motion.div
-          whileHover={{ scale: 1.05, y: -2 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <Button className="py-6 px-8 relative z-50 flex items-center gap-3 rounded-2xl cursor-pointer bg-[#1a1a1a] text-white hover:bg-black shadow-apple hover:shadow-apple-hover transition-all duration-200 text-[16px] font-bold tracking-tight">
-            <img src="/apple.svg" width={24} alt="apple" className="mb-1" />
-            Download for iPhone
-          </Button>
-        </motion.div>
-      </motion.div>
-    </motion.section>
+      </div>
+    </div>
   );
-};
 
-export default CTA;
+  return (
+    <section
+      ref={containerRef}
+      className="relative w-full overflow-hidden bg-transparent px-6 py-24 md:px-12 lg:px-24 flex items-center"
+    >
+      <div className="mx-auto w-full max-w-6/7 rounded-[3.5rem] bg-white border border-zinc-100 p-12 md:p-24 overflow-hidden relative shadow-[0_20px_50px_-12px_rgba(0,0,0,0.08)]">
+        {/* Background Accent Glow (Subtle) */}
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="grid grid-cols-1 items-center gap-24 lg:grid-cols-2 relative z-10">
+          {/* Left Side */}
+          <div className="z-40 flex flex-col items-center space-y-12 text-center lg:items-start lg:text-left font-satoshi">
+            <div className="space-y-8">
+              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-zinc-50 border border-zinc-100 shadow-sm">
+                <div className="w-2 h-2 rounded-full bg-black animate-pulse" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Ready to clean?</span>
+              </div>
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight tracking-[-0.03em] text-black"
+              >
+                Start <span className="text-zinc-500 italic">fresh.</span>
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1, duration: 0.8 }}
+                className="max-w-lg text-lg md:text-xl font-medium leading-tight tracking-tight text-zinc-500"
+              >
+                The most powerful way to declutter your library. Find duplicates,
+                large videos, and blurry shots in a single tap.
+              </motion.p>
+            </div>
+
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }} 
+              whileInView={{ opacity: 1, scale: 1 }} 
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, type: "spring" }}
+              className="relative"
+            >
+              <div className="absolute -inset-4 bg-zinc-100/50 rounded-[2rem] blur-xl opacity-0 hover:opacity-100 transition-opacity" />
+              <AppStoreButton size="lg" />
+              <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mt-6 text-center lg:text-left">Join 200,000+ optimized users</p>
+            </motion.div>
+          </div>
+
+          {/* Right Side: Mockups */}
+          <div className="relative flex h-[500px] w-full items-center justify-center lg:h-[600px]">
+            {/* Decorative radial behind phones */}
+            <div className="absolute w-[500px] h-[500px] bg-zinc-50 rounded-full blur-[100px] opacity-70" />
+
+            {/* Left Phone */}
+            <motion.div
+              style={{ x: leftPhoneX, rotate: leftPhoneRotate }}
+              className="absolute z-10"
+            >
+              <PhoneFrame src="/hero-3.png" alt="Similar photos" />
+            </motion.div>
+
+            {/* Right Phone */}
+            <motion.div
+              style={{ x: rightPhoneX, rotate: rightPhoneRotate }}
+              className="absolute z-10"
+            >
+              <PhoneFrame src="/hero-2.png" alt="Cleanup UI" />
+            </motion.div>
+
+            {/* Center Phone */}
+            <motion.div className="relative z-30 scale-110 drop-shadow-2xl">
+              <PhoneFrame src="/front.png" alt="Main app screen" />
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -1,10 +1,16 @@
 import { BlogData } from "@/hooks/use-blogs";
 import prisma from "@/lib/prisma";
 import BlogsPageClient from "./client";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Suspense } from "react";
+import Prism from "@/components/ui/background";
 
 interface PageProps {
   searchParams: Promise<{ tag?: string; search?: string }>;
 }
+
+// Force dynamic rendering - nuqs/useQueryState uses useSearchParams internally
+export const dynamic = 'force-dynamic';
 
 export default async function BlogsPage({ searchParams }: PageProps) {
   // Fetch all published blogs on the server
@@ -18,13 +24,13 @@ export default async function BlogsPage({ searchParams }: PageProps) {
         },
       },
     },
-    orderBy: { publishedAt: "desc" },
+    orderBy: [
+      { featured: "desc" }, // Featured first
+      { publishedAt: "desc" }, // Then by date
+    ],
   });
-  console.log(blogs)
-
 
   // Transform to BlogData format
-  // Using type assertion to avoid Prisma type inference issues in this file
   const allBlogs: BlogData[] = (blogs as any[]).map((blog) => ({
     id: blog.id,
     title: blog.title,
@@ -34,6 +40,13 @@ export default async function BlogsPage({ searchParams }: PageProps) {
     thumbnail: blog.thumbnail,
     publishedAt: blog.publishedAt?.toISOString() || blog.createdAt.toISOString(),
     readTime: blog.readTime,
+    // Include author info (name + avatar optional from User)
+    author: blog.author ? {
+      name: blog.author.name,
+      avatar: blog.author.image || "/default-avatar.png",
+    } : undefined,
+    // Include featured flag from DB
+    featured: blog.featured || false,
   }));
 
   // Compute all tags with counts
@@ -55,12 +68,77 @@ export default async function BlogsPage({ searchParams }: PageProps) {
   const initialSearch = params.search || "";
 
   return (
-    <BlogsPageClient
-      blogs={allBlogs}
-      allTags={allTags}
-      tagCounts={tagCounts}
-      initialTag={initialTag}
-      initialSearch={initialSearch}
-    />
+    <Suspense fallback={<BlogsPageSkeleton />}>
+      <div className="fixed inset-0 -z-10 pointer-events-none">
+              <Prism
+                animationType="rotate"
+                timeScale={0.3}
+                height={3.5}
+                baseWidth={5.5}
+                scale={3.6}
+                hueShift={0}
+                colorFrequency={1}
+                noise={0}
+                glow={0.8}
+              />
+            </div>
+      <BlogsPageClient
+        blogs={allBlogs}
+        allTags={allTags}
+        tagCounts={tagCounts}
+        initialTag={initialTag}
+        initialSearch={initialSearch}
+      />
+    </Suspense>
+  );
+}
+
+function BlogsPageSkeleton() {
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Hero skeleton */}
+      <section className="bg-warm-ivory pt-24 pb-16 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-16 space-y-6">
+            <div className="flex items-center gap-3">
+              <Skeleton className="h-6 w-24" />
+              <div className="w-8 h-[1px] bg-mistral-orange/30" />
+            </div>
+            <Skeleton className="h-24 w-3/4 max-w-2xl" />
+            <Skeleton className="h-8 w-1/2 max-w-xl" />
+          </div>
+          <Skeleton className="h-14 w-56" />
+        </div>
+      </section>
+
+      {/* Filter skeleton */}
+      <section className="bg-warm-ivory/50 border-y border-sunshine-700/10 py-8">
+        <div className="max-w-7xl mx-auto px-6 space-y-4">
+          <Skeleton className="h-10 w-full max-w-md" />
+          <div className="flex gap-2 flex-wrap">
+            {[1, 2, 3, 4].map((i) => (
+              <Skeleton key={i} className="h-9 w-20" />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Cards skeleton */}
+      <section className="py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <Skeleton className="h-8 w-40 mb-8" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="space-y-4">
+                <Skeleton className="h-48 w-full" />
+                <Skeleton className="h-6 w-20" />
+                <Skeleton className="h-8 w-full" />
+                <Skeleton className="h-16 w-full" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

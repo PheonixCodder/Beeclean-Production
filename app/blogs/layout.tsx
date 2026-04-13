@@ -1,5 +1,5 @@
-import BlogNavbar from "@/components/layout/blog-navbar";
-import BlogFooter from "@/components/layout/blog-footer";
+import Footer from "@/components/layout/footer";
+import Navbar from "@/components/layout/navbar";
 
 export default function BlogsLayout({
   children,
@@ -8,9 +8,10 @@ export default function BlogsLayout({
 }) {
   return (
     <div className="flex flex-col min-h-screen">
-      <BlogNavbar />
+      <Navbar />
       <main className="flex-1">{children}</main>
-      <BlogFooter />
+      <Footer />
     </div>
   );
 }
+

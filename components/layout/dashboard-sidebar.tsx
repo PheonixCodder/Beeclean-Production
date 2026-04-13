@@ -24,24 +24,27 @@ export default function DashboardSidebar() {
 
   return (
     <motion.aside
-      className="fixed left-0 top-0 z-50 h-screen w-64 border-r border-gray-200 bg-white"
+      className="fixed left-0 top-0 z-50 h-screen w-64 border-r border-zinc-100 bg-white font-satoshi"
       initial={{ x: -256, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="flex h-full flex-col">
+      <div className="flex h-full flex-col px-4">
         {/* Logo */}
-        <div className="flex h-16 items-center border-b border-gray-100 px-6">
-          <Link href="/" className="flex items-center gap-2">
-            <img src="/logo.svg" alt="logo" width={32} />
-            <span className="text-lg font-semibold tracking-tight text-gray-900">
-              Dashboard
+        <div className="flex h-24 items-center px-4">
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="p-2 rounded-xl bg-black transition-transform group-hover:scale-110">
+              <img src="/logo.svg" alt="logo" width={24} height={24} className="invert brightness-0 invert" />
+            </div>
+            <span className="text-2xl font-black tracking-[-0.05em] text-black">
+              Beeclean
             </span>
           </Link>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 space-y-1 px-3 py-6">
+        <nav className="flex-1 mt-8 space-y-1">
+          <p className="px-4 text-[10px] font-black uppercase tracking-widest text-zinc-300 mb-4">Main Menu</p>
           {navItems.map((item, index) => {
             const isActive =
               pathname === item.href ||
@@ -50,19 +53,19 @@ export default function DashboardSidebar() {
             return (
               <motion.div
                 key={item.href}
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 + index * 0.05 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
               >
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
+                  className={`flex items-center gap-4 rounded-2xl px-4 py-4 text-[13px] font-black uppercase tracking-widest transition-all duration-300 group ${
                     isActive
-                      ? "bg-primary/10 text-primary"
-                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                      ? "bg-white text-black shadow-apple-hover border border-zinc-100"
+                      : "text-zinc-400 hover:text-black hover:bg-zinc-50"
                   }`}
                 >
-                  <item.icon className="h-5 w-5" />
+                  <item.icon className={`h-5 w-5 transition-colors ${isActive ? "text-black" : "text-zinc-300 group-hover:text-black"}`} strokeWidth={isActive ? 2.5 : 2} />
                   {item.label}
                 </Link>
               </motion.div>
@@ -71,19 +74,26 @@ export default function DashboardSidebar() {
         </nav>
 
         {/* Bottom Section */}
-        <div className="space-y-1 border-t border-gray-100 px-3 py-4">
+        <div className="mt-auto border-t border-zinc-50 py-8 space-y-1">
+          <p className="px-4 text-[10px] font-black uppercase tracking-widest text-zinc-300 mb-4">Account</p>
           <Link
-            href="/"
-            className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 transition-all hover:bg-gray-50 hover:text-gray-900"
+            href="/dashboard/settings"
+            className={`flex items-center gap-4 rounded-2xl px-4 py-4 text-[13px] font-black uppercase tracking-widest transition-all duration-300 ${
+              pathname === "/dashboard/settings"
+                ? "bg-white text-black shadow-apple-hover border border-zinc-100"
+                : "text-zinc-400 hover:text-black hover:bg-zinc-50"
+            }`}
           >
-            <Settings className="h-5 w-5" />
+            <Settings className="h-5 w-5 text-zinc-300 group-hover:text-black" strokeWidth={2} />
             Settings
           </Link>
           <Link
             href="/sign-out"
-            className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-red-600 transition-all hover:bg-red-50"
+            className="flex items-center gap-4 rounded-2xl px-4 py-4 text-[13px] font-black uppercase tracking-widest text-zinc-300 transition-all hover:bg-zinc-50 hover:text-black group"
           >
-            <LogOut className="h-5 w-5" />
+            <div className="p-1 rounded-full bg-zinc-50 group-hover:bg-black transition-colors">
+              <LogOut className="h-4 w-4 text-zinc-300 group-hover:text-white" strokeWidth={2.5} />
+            </div>
             Sign Out
           </Link>
         </div>

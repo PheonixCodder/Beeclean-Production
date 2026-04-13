@@ -4,106 +4,79 @@ import { Button } from "@/components/ui/button";
 import { Heart, Lightbulb, Users, Zap } from "lucide-react";
 
 const CareerHero = () => {
-  const values = [
-    {
-      icon: <Lightbulb className="w-6 h-6" />,
-      title: "Innovation",
-      description: "We push boundaries and explore new ideas",
-    },
-    {
-      icon: <Users className="w-6 h-6" />,
-      title: "Collaboration",
-      description: "Together we build something extraordinary",
-    },
-    {
-      icon: <Zap className="w-6 h-6" />,
-      title: "Impact",
-      description: "Your work helps millions worldwide",
-    },
-    {
-      icon: <Heart className="w-6 h-6" />,
-      title: "Care",
-      description: "We support each other's growth and wellbeing",
-    },
-  ];
-
   return (
     <motion.div
-      className="flex flex-col items-center bg-white relative z-20 pb-10 font-satoshi"
+      className="flex flex-col items-center bg-white relative z-20 pb-40 pt-20 font-satoshi overflow-hidden"
       initial="hidden"
-      animate="visible"
+      whileInView="visible"
+      viewport={{ once: true }}
       variants={{
         hidden: { opacity: 0 },
         visible: {
           opacity: 1,
           transition: {
-            staggerChildren: 0.15,
-            delayChildren: 0.2,
+            staggerChildren: 0.1,
+            delayChildren: 0.1,
           },
         },
       }}
     >
+      {/* Background Depth Layers */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* Mesh Gradients */}
+        <div className="absolute top-[-10%] right-[-10%] w-[70%] h-[70%] bg-[radial-gradient(circle_at_center,_var(--zinc-100)_0%,_transparent_70%)] opacity-40 blur-[120px] animate-pulse" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] bg-[radial-gradient(circle_at_center,_var(--zinc-100)_0%,_transparent_70%)] opacity-30 blur-[100px]" />
+        
+        {/* Noise Texture Overlay */}
+        <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+        
+        {/* Subtle Grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:40px_40px]" />
+      </div>
+      {/* Background Polish */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[80%] bg-[radial-gradient(circle_at_center,_var(--zinc-50)_0%,_transparent_70%)] opacity-70" />
+        <div className="absolute top-[20%] -left-[20%] w-[60%] h-[100%] bg-[radial-gradient(circle_at_center,_var(--zinc-50)_0%,_transparent_60%)] blur-3xl opacity-50" />
+      </div>
+
       <motion.div
-        className="flex flex-col items-center justify-center min-h-[300px] px-4 text-center"
+        className="flex flex-col items-center justify-center min-h-[400px] px-6 text-center relative z-10"
         variants={{
           hidden: { opacity: 0, y: 30 },
           visible: {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.6, ease: "easeOut" },
+            transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
           },
         }}
       >
-        <h1 className="text-5xl md:text-6xl font-black tracking-tight text-[#1a1a1a] leading-[1.1] mb-6">
+        <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-zinc-50 border border-zinc-100 shadow-sm mb-10">
+           <div className="w-2 h-2 rounded-full bg-black animate-pulse" />
+           <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Join the Collective</span>
+        </div>
+
+        <h1 className="text-6xl md:text-6xl font-black tracking-tight text-[#1a1a1a] leading-[1.1] mb-8">
           Build the future <br />
-          <span className="relative inline-block">
-            <span className="relative z-10 text-primary">with us</span>
-            <span className="absolute inset-0 bg-primary/25 rounded-xl scale-110" />
-          </span>
+          <span className="text-primary italic">with us.</span>
         </h1>
-        <p className="mt-4 max-w-2xl font-semibold text-xl text-foreground/85 leading-relaxed">
+        
+        <p className="max-w-xl font-semibold text-xl text-foreground/85 leading-relaxed mb-16">
           Join a team of passionate creators who are reimagining how people
           interact with their devices. Help us build tools that millions rely on
           every day.
         </p>
-      </motion.div>
 
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-8 max-w-6xl mx-auto"
-        variants={{
-          hidden: { opacity: 0 },
-          visible: {
-            opacity: 1,
-            transition: {
-              staggerChildren: 0.1,
-              delayChildren: 0.3,
-            },
-          },
-        }}
-      >
-        {values.map((value, index) => (
-          <motion.div
-            key={index}
-            variants={{
-              hidden: { opacity: 0, y: 40 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: { duration: 0.5, ease: "easeOut" },
-              },
-            }}
-            whileHover={{ y: -8, transition: { duration: 0.2 } }}
-            className="flex flex-col items-center p-6 bg-[#F6F6F6] rounded-3xl border-none shadow-sm"
-          >
-            <div className="w-14 h-14 flex items-center justify-center bg-white rounded-2xl shadow-md mb-4 text-primary">
-              {value.icon}
-            </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">{value.title}</h3>
-            <p className="text-gray-500 text-center leading-relaxed">
-              {value.description}
-            </p>
-          </motion.div>
-        ))}
+        <motion.div 
+          className="mt-16"
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+          }}
+        >
+          <Button className="h-16 px-10 rounded-2xl bg-black text-white font-black uppercase tracking-widest shadow-xl hover:bg-zinc-800 transition-all">
+            See Open Roles
+          </Button>
+        </motion.div>
       </motion.div>
     </motion.div>
   );
