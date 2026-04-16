@@ -41,7 +41,6 @@ Beeclean is a professional iPhone cleaning & optimization web application built 
 - **Framework:** Next.js 16.2.2 (App Router, React 19)
 - **Styling:** Tailwind CSS v4, shadcn/ui components
 - **Animations:** Framer Motion v12
-- **Icons:** Lucide React
 - **State Management:** TanStack Query v5 (React Query)
 - **URL State:** Nuqs (query string management)
 
