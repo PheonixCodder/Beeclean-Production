@@ -39,7 +39,7 @@ export const SignInView = () => {
                     Welcome back
                   </h1>
                   <p className="text-zinc-400 font-medium tracking-tight">
-                    Enter the collective dashboard
+                    Enter the Beeclean dashboard
                   </p>
                 </div>
 
@@ -112,7 +112,7 @@ export const SignInView = () => {
                     href="/sign-up"
                     className="text-black hover:underline underline-offset-8 decoration-2"
                   >
-                    Join the collective
+                    Join Beeclean
                   </Link>
                 </div>
               </div>

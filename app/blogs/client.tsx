@@ -12,6 +12,7 @@ import { AppStoreButton } from "@/components/ui/app-store-button";
 import { ArrowRight, Sparkles, Inbox, Clock } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Prism from "@/components/ui/background";
+import { toast } from "sonner";
 
 interface BlogsPageClientProps {
   blogs: BlogData[];
@@ -30,6 +31,24 @@ export default function BlogsPageClient({
 }: BlogsPageClientProps) {
   const [selectedTag, setSelectedTag] = React.useState(initialTag);
   const [searchQuery, setSearchQuery] = React.useState(initialSearch);
+  const [isPending, startTransition] = React.useTransition();
+  const [email, setEmail] = React.useState("");
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    startTransition(async () => {
+      const { subscribeNewsletter } = await import("@/app/actions/newsletter");
+      const result = await subscribeNewsletter(email);
+      if (result.success) {
+        toast.success(result.message);
+        setEmail("");
+      } else {
+        toast.error(result.message);
+      }
+    });
+  };
 
   const filteredBlogs = useMemo(() => {
     return blogs.filter((blog) => {
@@ -100,8 +119,7 @@ React.useEffect(() => {
               transition={{ delay: 0.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
               className="text-6xl md:text-6xl font-black tracking-tight text-[#1a1a1a] mb-8 leading-[1.1]"
             >
-              Mastering <br />
-              <span className="text-primary italic">your device.</span>
+              Blogs <br />
             </motion.h1>
 
             <motion.p
@@ -343,14 +361,14 @@ isPastFilter
                         <img src="/logo.svg" alt="Bee" className="w-10 h-10" />
                       </div>
                       <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-white mb-6 leading-tight">
-                        Experience the <span className="text-zinc-400 italic">purest</span> version of your phone.
+                        Unlock Your <span className="text-zinc-400 italic">Phone’s</span> Potential.
                       </h2>
                       <p className="text-zinc-400 text-lg font-medium mb-10">
                         Join 200k+ users who trust Beeclean for a clutter-free, high-performance iPhone experience.
                       </p>
                       <div className="flex flex-col sm:flex-row gap-4 items-center">
                         <AppStoreButton size="lg" variant="white" />
-                        <Link href="/pricing" className="text-zinc-400 hover:text-white font-bold text-sm tracking-tight transition-colors">
+                        <Link href="/#pricing" className="text-zinc-400 hover:text-white font-bold text-sm tracking-tight transition-colors">
                           View Pricing Plans
                         </Link>
                       </div>
@@ -410,18 +428,21 @@ isPastFilter
             </h2>
             
             <p className="text-lg text-muted-foreground font-medium mb-16 max-w-2xl mx-auto">
-              Join the collective for weekly architectural deep-dives into mobile performance and security.
+              Join Beeclean for weekly architectural deep-dives into mobile performance and security.
             </p>
             
-            <form className="flex flex-col sm:flex-row gap-6 p-4 bg-zinc-50/50 backdrop-blur-xl rounded-[2.5rem] border border-zinc-100 max-w-2xl mx-auto shadow-apple-hover">
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-6 p-4 bg-zinc-50/50 backdrop-blur-xl rounded-[2.5rem] border border-zinc-100 max-w-2xl mx-auto shadow-apple-hover">
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Secure email link"
-                className="flex-1 px-8 py-5 text-lg font-black uppercase tracking-widest outline-none bg-transparent placeholder:text-zinc-300"
+                className="flex-1 px-8 py-5 text-lg font-black uppercase tracking-widest outline-none bg-transparent placeholder:text-zinc-300 disabled:opacity-50"
                 required
+                disabled={isPending}
               />
-              <Button type="submit" className="h-20 rounded-2xl bg-black text-white px-12 font-black uppercase tracking-widest text-xs shadow-2xl hover:bg-zinc-800 transition-all">
-                Join Community
+              <Button disabled={isPending} type="submit" className="h-20 rounded-2xl bg-black text-white px-12 font-black uppercase tracking-widest text-xs shadow-2xl hover:bg-zinc-800 transition-all">
+                {isPending ? "Joining..." : "Join Community"}
               </Button>
             </form>
           </div>

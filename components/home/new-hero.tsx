@@ -36,8 +36,8 @@ const avatarStack = [
 export default function NewHero() {
   return (
     <section className="relative min-h-screen bg-transparent flex items-center overflow-hidden font-satoshi selection:bg-black/5">
-      <div className="min-w-6/7 mt-20 bg-white border border-zinc-100 p-12 rounded-[3.5rem] mx-auto">
-      <div className="px-6 w-full relative z-10">
+      <div className="min-w-6/7 mt-20 bg-white border border-zinc-100 pt-12 rounded-[3.5rem] mx-auto">
+      <div className="max-w-5/6 mx-auto relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-24">
           {/* Left Section: Content & Conversion */}
           <motion.div
@@ -121,8 +121,8 @@ export default function NewHero() {
                   </svg>
                 </span>
                 <img
-                  src="/bee-right.png"
-                  className="w-[200px] absolute ml-107 -mt-15 drop-shadow-2xl z-50"
+                  src="/bee-right-new.png"
+                  className="w-[140px] absolute ml-110 -mt-8 drop-shadow-2xl z-50"
                 />
               </h1>
             </motion.div>

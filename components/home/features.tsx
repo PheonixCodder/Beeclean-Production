@@ -180,37 +180,37 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Camera, Search, LineChart, Droplets } from "lucide-react";
+import { MessageSquare, Users, Minimize, Mail } from "lucide-react";
 import Image from "next/image";
 
 const features = [
   {
-    id: "smart-selection",
-    icon: <Camera className="size-6" />,
-    title: "AI Smart Selection",
-    description: "Our AI identifies the best shot in a series of similar photos, so you only keep the perfection.",
-    image: "/front.png", 
+    id: "ask-the-bee",
+    icon: <MessageSquare className="size-6" />,
+    title: "Ask the Bee AI",
+    description: "Command your assistant to sweep out specific junk via our intuitive chat, instantly zapping duplicate photos.",
+    image: "/Home.png", 
   },
   {
-    id: "duplicate-scan",
-    icon: <Search className="size-6" />,
-    title: "Deep Duplicate Scan",
-    description: "Locate hidden duplicates and blurry shots across your entire library in seconds.",
-    image: "/hero-2.png", 
+    id: "contacts-cleanup",
+    icon: <Users className="size-6" />,
+    title: "Smart Contacts Cleanup",
+    description: "Merge duplicate contacts and effortlessly fix missing info, keeping your address book flawlessly organized.",
+    image: "/Contact.png", 
   },
   {
-    id: "analytics",
-    icon: <LineChart className="size-6" />,
-    title: "Storage Analytics",
-    description: "Visualize exactly what's eating your space with high-precision storage breakdowns.",
-    image: "/hero-3.png", 
+    id: "file-compression",
+    icon: <Minimize className="size-6" />,
+    title: "File Compression",
+    description: "Our Bee 'hugs' your large files to easily compress them into lightweight versions, freeing up gigabytes.",
+    image: "/Compress.png", 
   },
   {
     id: "email-detox",
-    icon: <Droplets className="size-6" />,
+    icon: <Mail className="size-6" />,
     title: "Email Detox",
-    description: "Unsubscribe from junk and mass-delete newsletters to achieve inbox zero instantly.",
-    image: "/front-wb.png", 
+    description: "Sort cluttered inboxes into neat categories, instantly zapping newsletters and mass-deleting junk to end inbox anxiety.",
+    image: "/Email.png", 
   },
 ];
 

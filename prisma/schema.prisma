@@ -186,3 +186,14 @@ model Application {
   @@index([status])
   @@map("application")
 }
+
+model Newsletter {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@map("newsletter")
+}

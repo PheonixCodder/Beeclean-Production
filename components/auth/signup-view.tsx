@@ -35,7 +35,7 @@ export const SignUpView = () => {
                     <img src="/logo.svg" alt="Beeclean" className="w-10 h-10 brightness-0 invert" />
                   </div>
                   <h1 className="text-4xl font-black tracking-[-0.04em] text-black mb-3 font-satoshi">
-                    Join collective
+                    Join Beeclean
                   </h1>
                   <p className="text-zinc-400 font-medium tracking-tight">
                     Create your workspace credentials
@@ -154,7 +154,7 @@ export const SignUpView = () => {
                     href="/sign-in"
                     className="text-black hover:underline underline-offset-8 decoration-2"
                   >
-                    Enter collective
+                    Enter Beeclean
                   </Link>
                 </div>
               </div>

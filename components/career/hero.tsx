@@ -52,7 +52,7 @@ const CareerHero = () => {
       >
         <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-zinc-50 border border-zinc-100 shadow-sm mb-10">
            <div className="w-2 h-2 rounded-full bg-black animate-pulse" />
-           <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Join the Collective</span>
+           <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Join Beeclean</span>
         </div>
 
         <h1 className="text-6xl md:text-6xl font-black tracking-tight text-[#1a1a1a] leading-[1.1] mb-8">

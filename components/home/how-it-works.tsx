@@ -19,58 +19,61 @@ if (typeof window !== "undefined") {
 const steps = [
   {
     id: "01",
-    title: "AI Mascot Bee",
-    accent: "text-primary",
-    accentBg: "bg-primary/10",
-    desc: "Our unique AI-powered bee mascot guides users through the cleaning process with interactive animations and personalized recommendations.",
+    title: "Meet Your AI Bee",
+    accent: "text-black dark:text-white",
+    accentBg: "bg-black/5 dark:bg-white/10",
+    image: "/Home.png",
+    desc: "Start your cleanup journey with our proactive AI mascot that instantly scans your device to identify gigabytes of hidden clutter.",
     features: [
       {
         value: "item-1",
-        trigger: "Interactive Guide",
-        content: "The bee mascot provides real-time tips and walks users through each optimization step with engaging animations.",
+        trigger: "Intelligent Device Scan",
+        content: "Tap the Bee to uncover duplicate photos, giant videos, and outdated screenshots hiding in the depths of your camera roll.",
       },
       {
         value: "item-2",
-        trigger: "Personalized Recommendations",
-        content: "Based on device usage patterns, the AI suggests customized cleaning schedules and optimization techniques.",
+        trigger: "Personalized Action Plan",
+        content: "Get an intuitive, visual breakdown showing exactly what's eating your storage and precisely how much space you can recover instantly.",
       },
     ],
   },
   {
     id: "02",
-    title: "Content Management System",
-    accent: "text-chart-2",
-    accentBg: "bg-chart-2/10",
-    desc: "Manage blog content with rich formatting, tagging, and categorization through an intuitive admin dashboard.",
+    title: "One-Tap Detox",
+    accent: "text-black dark:text-white",
+    accentBg: "bg-black/5 dark:bg-white/10",
+    image: "/Email.png",
+    desc: "Sweep out the digital noise. Sort out your thousands of unread emails and perfectly organize your messy address book.",
     features: [
       {
         value: "item-1",
-        trigger: "Rich Content Editor",
-        content: "Create and edit blog posts with DOMPurify sanitization for secure HTML content including images, code blocks, and formatting.",
+        trigger: "Inbox Zero Workflow",
+        content: "Easily sort cluttered inboxes into neat categories, bulk unsubscribe from newsletters, and mass-delete promotional junk in seconds.",
       },
       {
         value: "item-2",
-        trigger: "Tag & Category System",
-        content: "Organize content with tags and categories for easy filtering and discovery. Automatic slug generation and SEO optimization.",
+        trigger: "Smart Contacts Merge",
+        content: "Automatically locate and cleanly merge duplicate contacts, effortlessly filling in missing or incomplete details in your address book.",
       },
     ],
   },
   {
     id: "03",
-    title: "Job Application System",
-    accent: "text-chart-3",
-    accentBg: "bg-chart-3/10",
-    desc: "Streamline job applications with resume upload, status tracking, and admin review workflow for efficient hiring.",
+    title: "Vault & Compress",
+    accent: "text-black dark:text-white",
+    accentBg: "bg-black/5 dark:bg-white/10",
+    image: "/Vault.png",
+    desc: "Reclaim massive amounts of space by shrinking large files, or securely lock away your most private media.",
     features: [
       {
         value: "item-1",
-        trigger: "Resume Upload & Validation",
-        content: "Secure file upload with magic bytes validation for PDF/DOC/DOCX files, size limits, and automatic safe filename generation.",
+        trigger: "Lossless Video Compression",
+        content: "The Bee hugs your heaviest 4K videos, deeply compressing them into lightweight, shareable versions without noticeably sacrificing quality.",
       },
       {
         value: "item-2",
-        trigger: "Admin Review Workflow",
-        content: "Track application status (pending, reviewed, accepted, rejected) with admin-only access to review and update application status.",
+        trigger: "Face-ID Secure Vault",
+        content: "Lock away sensitive photos and documents in a highly secure, offline vault that remains completely invisible until unlocked with Face ID.",
       },
     ],
   },
@@ -159,29 +162,25 @@ export default function MobileStack() {
 
               {/* Center Column: Mobile Frame */}
               <div className="col-span-4 flex justify-center">
-                <div className="relative w-[300px] h-[600px] bg-card rounded-[3.2rem] border-[10px] border-secondary shadow-apple ring-1 ring-border overflow-hidden transition-transform duration-500 hover:scale-[1.02]">
-                  {/* Dynamic Island Area */}
-                  <div className="absolute top-3 left-1/2 -translate-x-1/2 w-28 h-7 bg-secondary rounded-full z-20" />
+                {/* The Container */}
+                <div className="relative w-[320px] md:w-[360px] aspect-[9/19] transition-transform duration-500 hover:scale-[1.02]">
+                  {/* Frame Shadow */}
+                  <div className="absolute inset-0 z-0 bg-black/5 blur-3xl scale-90 translate-y-10 rounded-[3rem]" />
+                  
+                  {/* 1. The Frame */}
+                  <img
+                    src="/frame.png"
+                    alt="frame"
+                    className="absolute inset-0 z-30 w-full h-full object-contain pointer-events-none drop-shadow-2xl"
+                  />
 
-                  {/* Screen Interior */}
-                  <div className="absolute inset-0 bg-muted/20 flex flex-col p-6 pt-16">
-                    <div
-                      className={`w-12 h-12 rounded-2xl ${step.accentBg} ${step.accent} flex items-center justify-center mb-8`}
-                    >
-                      <div className="w-5 h-5 rounded-md border-2 border-current" />
-                    </div>
-                    <div className="space-y-4 mb-8">
-                      <div className="h-3 w-full bg-foreground/10 rounded-full" />
-                      <div className="h-3 w-2/3 bg-foreground/5 rounded-full" />
-                    </div>
-                    <div className="grid grid-cols-1 gap-4">
-                      <div className="h-32 rounded-2xl bg-card border border-border shadow-sm flex items-center justify-center">
-                        <div className="w-1/2 h-2 bg-muted rounded-full" />
-                      </div>
-                      <div className="h-32 rounded-2xl bg-card border border-border shadow-sm flex items-center justify-center">
-                        <div className="w-1/2 h-2 bg-muted rounded-full" />
-                      </div>
-                    </div>
+                  {/* 2. The Active Image */}
+                  <div className="absolute inset-0 z-10 w-full h-[97%] mt-3 rounded-[2.8rem] overflow-hidden">
+                    <img
+                      src={step.image}
+                      alt={step.title}
+                      className="w-[91.5%] h-full mt-0 ml-[15px] md:ml-[16px] rounded-[2.8rem] object-cover"
+                    />
                   </div>
                 </div>
               </div>

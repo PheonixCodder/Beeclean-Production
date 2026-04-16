@@ -11,10 +11,12 @@ import {
   Plus,
   Eye,
   TrendingUp,
+  Mail,
 } from "lucide-react";
 import { useDashboardBlogs } from "@/hooks/dashboard/use-dashboard-blogs";
 import { useDashboardCareers } from "@/hooks/dashboard/use-dashboard-careers";
 import { useDashboardApplications } from "@/hooks/dashboard/use-dashboard-applications";
+import { useDashboardNewsletter } from "@/hooks/dashboard/use-dashboard-newsletter";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -39,7 +41,9 @@ export default function DashboardPage() {
   const { statusCounts: careerStats, isLoading: careersLoading } =
     useDashboardCareers();
   const { stats: appStats, isLoading: appsLoading } =
-    useDashboardApplications();
+      useDashboardApplications();
+  const { statusCounts: newsletterStats, isLoading: newsletterLoading } =
+    useDashboardNewsletter();
 
   const statsCards = [
     {
@@ -66,6 +70,13 @@ export default function DashboardPage() {
       loading: appsLoading,
       pending: appStats?.pending,
     },
+    {
+      title: "Newsletter",
+      value: newsletterStats?.total || 0,
+      icon: Mail,
+      href: "/dashboard/newsletter",
+      loading: newsletterLoading,
+    }
   ];
 
   return (
@@ -92,7 +103,7 @@ export default function DashboardPage() {
       {/* Stats Grid */}
       <motion.div
         variants={containerVariants}
-        className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+        className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16"
       >
         {statsCards.map((stat, index) => (
           <motion.div
@@ -177,6 +188,15 @@ export default function DashboardPage() {
                 >
                   <TrendingUp className="h-5 w-5 mr-3" strokeWidth={3} />
                   Review Applications
+                </Button>
+              </Link>
+              <Link href="/dashboard/newsletter">
+                <Button
+                  variant="outline"
+                  className="w-full h-20 rounded-2xl border-zinc-100 bg-white text-black hover:bg-zinc-50 shadow-sm transition-all duration-300 font-black uppercase tracking-widest text-xs"
+                >
+                  <TrendingUp className="h-5 w-5 mr-3" strokeWidth={3} />
+                  Review Newsletter
                 </Button>
               </Link>
             </div>
