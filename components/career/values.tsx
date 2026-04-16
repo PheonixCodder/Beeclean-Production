@@ -51,7 +51,7 @@ const Values = () => {
             The principles that <br /><span className="text-zinc-300 italic">drive us.</span>
           </h4>
           <p className="text-xl md:text-2xl text-zinc-400 font-medium leading-tight tracking-tight max-w-lg mx-auto">
-            These are the core beliefs that guide everything we build and how we operate as a collective.
+            These are the core beliefs that guide everything we build and how we operate as Beeclean.
           </p>
         </motion.div>
 

@@ -10,17 +10,25 @@ import {
   Users,
   Settings,
   LogOut,
+  Mail,
 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+
 
 const navItems = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
   { href: "/dashboard/blogs", label: "Blogs", icon: FileText },
   { href: "/dashboard/career", label: "Jobs", icon: Briefcase },
   { href: "/dashboard/applications", label: "Applications", icon: Users },
+  { href: "/dashboard/newsletter", label: "Newsletter", icon: Mail },
 ];
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
+
+  const handleLogout = async () => {
+    await authClient.signOut();
+};
 
   return (
     <motion.aside
@@ -87,15 +95,15 @@ export default function DashboardSidebar() {
             <Settings className="h-5 w-5 text-zinc-300 group-hover:text-black" strokeWidth={2} />
             Settings
           </Link>
-          <Link
-            href="/sign-out"
+          <div
+          onClick={handleLogout}
             className="flex items-center gap-4 rounded-2xl px-4 py-4 text-[13px] font-black uppercase tracking-widest text-zinc-300 transition-all hover:bg-zinc-50 hover:text-black group"
           >
             <div className="p-1 rounded-full bg-zinc-50 group-hover:bg-black transition-colors">
               <LogOut className="h-4 w-4 text-zinc-300 group-hover:text-white" strokeWidth={2.5} />
             </div>
             Sign Out
-          </Link>
+          </div>
         </div>
       </div>
     </motion.aside>

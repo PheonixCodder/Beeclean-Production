@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,12 +7,18 @@ import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
+import { NumberTicker } from "@/components/ui/number-ticker";
+
 const Pricing = () => {
+  const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("yearly");
+
   const pricingPlans = [
     {
       name: "Premium",
-      price: "9.99",
-      description: "Ultimate phone hygiene",
+      monthlyPrice: "9.99",
+      yearlyPrice: "2.92",
+      monthlyDescription: "Billed $9.99 monthly. Cancel anytime.",
+      yearlyDescription: "Annual — $34.99/yr",
       features: [
         "Everything in Pro",
         "Secret vault (Face ID)",
@@ -25,8 +31,10 @@ const Pricing = () => {
     },
     {
       name: "Pro",
-      price: "4.99",
-      description: "Full cleaning power",
+      monthlyPrice: "4.99",
+      yearlyPrice: "1.99",
+      monthlyDescription: "Billed $4.99 monthly. Cancel anytime.",
+      yearlyDescription: "First year $23.99, then $34.99/year. Cancel anytime.",
       features: [
         "Everything in Free",
         "Unlimited photo cleanup",
@@ -48,26 +56,58 @@ const Pricing = () => {
       </div>
 
       <div>
-         <motion.div
-        className="max-w-xl mx-auto text-center flex flex-col gap-4 mb-24"
-        variants={{
-          hidden: { opacity: 0, y: 30 },
-          visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.6, ease: "easeOut" },
-          },
-        }}
-      >
-        <div className="inline-flex items-center justify-center gap-3 px-4 py-2 rounded-full bg-zinc-50 border border-zinc-100 shadow-sm self-center">
-             <div className="w-2 h-2 rounded-full bg-black animate-pulse" />
-             <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Simple Pricing</span>
+        <motion.div
+          className="max-w-xl mx-auto text-center flex flex-col gap-4 mb-16"
+          variants={{
+            hidden: { opacity: 0, y: 30 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.6, ease: "easeOut" },
+            },
+          }}
+        >
+          <div className="inline-flex items-center justify-center gap-3 px-4 py-2 rounded-full bg-zinc-50 border border-zinc-100 shadow-sm self-center">
+            <div className="w-2 h-2 rounded-full bg-black animate-pulse" />
+            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Simple Pricing</span>
           </div>
-        <h4 className="text-5xl font-black tracking-tight">Pricing plans</h4>
-        <p className="text-lg text-muted-foreground font-medium">
-          Start free, go pro when you’re ready! No limits, no pressure.
-        </p>
-      </motion.div>
+          <h4 className="text-5xl font-black tracking-tight">Pricing plans</h4>
+          <p className="text-lg text-muted-foreground font-medium mb-6">
+            Start free, go pro when you’re ready! No limits, no pressure.
+          </p>
+        </motion.div>
+
+        {/* Toggle Buttons */}
+        <div className="flex justify-center mb-16 relative z-10">
+          <div className="flex bg-zinc-50 p-1.5 rounded-full border border-zinc-100 shadow-sm">
+            <button
+              onClick={() => setBillingCycle("monthly")}
+              className={cn(
+                "px-8 py-2.5 rounded-full text-sm font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-2",
+                billingCycle === "monthly" 
+                  ? "bg-white text-black shadow-md border border-zinc-100" 
+                  : "text-zinc-400 hover:text-zinc-600 border border-transparent"
+              )}
+            >
+              Monthly
+            </button>
+            <button
+              onClick={() => setBillingCycle("yearly")}
+              className={cn(
+                "px-8 py-2.5 rounded-full text-sm font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-2",
+                billingCycle === "yearly" 
+                  ? "bg-black text-white shadow-xl" 
+                  : "text-zinc-400 hover:text-zinc-600 border border-transparent"
+              )}
+            >
+              Yearly
+              <span className={cn(
+                "text-[9px] px-2 py-0.5 rounded-full transition-colors",
+                billingCycle === "yearly" ? "bg-white/20 text-white" : "bg-zinc-200 text-zinc-500"
+              )}>Save 60%</span>
+            </button>
+          </div>
+        </div>
 
         {/* Cards Container */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch max-w-6xl mx-auto">
@@ -100,11 +140,13 @@ const Pricing = () => {
                     {plan.name}
                   </span>
                   <div className="mt-8 flex items-baseline gap-1">
-                    <span className="text-6xl font-black tracking-tighter">${plan.price}</span>
+                    <span className="text-6xl font-black tracking-tighter">
+                      <NumberTicker value={parseFloat(billingCycle === "monthly" ? plan.monthlyPrice : plan.yearlyPrice)} decimals={2} />
+                    </span>
                     <span className={cn("text-sm font-bold", plan.highlight ? "text-zinc-500" : "text-zinc-400")}>/mo</span>
                   </div>
                   <p className={cn("mt-4 text-sm font-medium", plan.highlight ? "text-zinc-400" : "text-zinc-500")}>
-                    {plan.description}
+                    {billingCycle === "monthly" ? plan.monthlyDescription : plan.yearlyDescription}
                   </p>
                 </div>
 

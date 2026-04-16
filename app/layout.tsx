@@ -8,6 +8,7 @@ import { ErrorBoundary } from "@/components/error-boundary";
 import { WebVitals } from "@/components/web-vitals";
 import { validateEnv } from "@/lib/env-validator";
 import { HashScrollHandler } from "@/components/ui/hash-scroll-handler";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -89,6 +90,7 @@ export default function RootLayout({
         </NuqsAdapter>
         <WebVitals />
         <HashScrollHandler />
+        <Toaster />
       </body>
     </html>
   );

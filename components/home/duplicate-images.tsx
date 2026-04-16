@@ -54,7 +54,7 @@ export default function DuplicateSelector() {
           className="text-center mb-16 space-y-4"
         >
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-            Quality over <span className="text-primary">Quantity</span>
+            Pick the <span className="text-primary">Perfect Shot</span>
           </h2>
           <p className="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
             Our AI instantly identifies the best shots in your gallery, so you
@@ -114,7 +114,6 @@ export default function DuplicateSelector() {
                   </motion.div>
                 </div>
               </div>
-              
             </motion.div>
           ))}
         </div>
