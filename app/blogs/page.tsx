@@ -70,17 +70,7 @@ export default async function BlogsPage({ searchParams }: PageProps) {
   return (
     <Suspense fallback={<BlogsPageSkeleton />}>
       <div className="fixed inset-0 -z-10 pointer-events-none">
-              <Prism
-                animationType="rotate"
-                timeScale={0.3}
-                height={3.5}
-                baseWidth={5.5}
-                scale={3.6}
-                hueShift={0}
-                colorFrequency={1}
-                noise={0}
-                glow={0.8}
-              />
+              <div className="h-full bg-gradient-to-r from-amber-50 via-yellow-50 to-emerald-50" />
             </div>
       <BlogsPageClient
         blogs={allBlogs}

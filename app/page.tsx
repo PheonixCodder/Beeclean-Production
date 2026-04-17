@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description:
     "Keep your iPhone running like new with Beeclean. Advanced cleaning, optimization, and performance tools for iOS devices.",
   keywords: [
-    "iPhone cleaning",  
+    "iPhone cleaning",
     "iOS optimization",
     "iPhone performance",
     "clean iPhone",
@@ -67,17 +67,7 @@ const Home = () => {
     <div className="relative min-h-screen">
       {/* Global Background */}
       <div className="fixed inset-0 -z-10 pointer-events-none">
-        <Prism
-          animationType="rotate"
-          timeScale={0.3}
-          height={3.5}
-          baseWidth={5.5}
-          scale={3.6}
-          hueShift={0}
-          colorFrequency={1}
-          noise={0}
-          glow={0.8}
-        />
+<div className="h-full bg-gradient-to-r from-amber-50 via-yellow-50 to-emerald-50" />
       </div>
 
       <Navbar />
@@ -96,7 +86,7 @@ const Home = () => {
         <FAQ />
         <CTA />
       </main>
-      
+
       {/* Footer with background to overlay the Prism */}
       <div className="bg-white dark:bg-slate-950 relative z-10">
         <Footer />
