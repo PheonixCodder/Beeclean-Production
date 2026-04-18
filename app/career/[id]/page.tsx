@@ -1,44 +1,14 @@
-import { notFound } from "next/navigation";
-import JobDetail from "@/components/career/job-detail";
-import Values from "@/components/career/values";
-import ApplicationForm from "@/components/career/application-form";
-import Navbar from "@/components/layout/navbar";
-import Footer from "@/components/layout/footer";
-import prisma from "@/lib/prisma";
+import React from 'react'
+import Career from '@/features/career/ui/pages/career'
 
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function JobPage({ params }: PageProps) {
-  const { id } = await params;
-  const job = await prisma.job.findUnique({
-    where: { id },
-  });
-
-  if (!job || job.status !== "published") {
-    notFound();
-  }
-
-  const career = {
-    id: job.id,
-    title: job.title,
-    department: job.department,
-    location: job.location,
-    type: job.type,
-    salary: job.salary,
-    description: job.description,
-    responsibilities: job.responsibilities as string[],
-    requirements: job.requirements as string[],
-  };
-
+const CareerPage = ({ params }: PageProps) => {
   return (
-    <div>
-      <Navbar />
-      <JobDetail job={career} />
-      <Values />
-      <ApplicationForm jobTitle={career.title} jobId={career.id} />
-      <Footer />
-    </div>
-  );
+    <Career params={params} />
+  )
 }
+
+export default CareerPage

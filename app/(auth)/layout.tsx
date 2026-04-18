@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { AuthAnimation } from "@/components/auth/auth-layout";
+import { AuthAnimation } from "@/features/auth/ui/components/auth-layout";
 
 const AuthLayout = async ({ children }: Readonly<PropsWithChildren>) => {
   const session = await auth.api.getSession({

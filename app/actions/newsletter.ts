@@ -36,9 +36,21 @@ export async function subscribeNewsletter(email: string) {
     return { success: true, message: "Successfully subscribed to the Beeclean Journal!" };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return { success: false, message: error.errors[0].message };
+      return { success: false, message: error.message };
     }
     console.error("Newsletter subscription error: ", error);
     return { success: false, message: "An unexpected error occurred. Please try again." };
+  }
+}
+
+export async function getNewsletters() {
+  try {
+    const newsletters = await prisma.newsletter.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+    return newsletters;
+  } catch (error) {
+    console.error("Error fetching newsletters:", error);
+    throw new Error("Failed to fetch newsletters");
   }
 }

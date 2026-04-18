@@ -1,4 +1,4 @@
-import { SignInView } from "@/components/auth/signin-view";
+import { SignInView } from "@/features/auth/ui/pages/signin-view";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
