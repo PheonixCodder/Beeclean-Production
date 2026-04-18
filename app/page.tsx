@@ -1,19 +1,5 @@
 import type { Metadata } from "next";
-// import { BlogSlider } from "@/components/blog/blog-slider"; // Component not implemented yet
-import BeeBuddyHero from "@/components/home/bee-screen";
-import CTA from "@/components/home/cta";
-import FAQ from "@/components/home/faq";
-import Features from "@/components/home/features";
-// import Hero from "@/components/home/hero";
-import HowItWorks from "@/components/home/how-it-works";
-// import PhoneDecodeScroll from "@/components/home/phone-decode";
-import Pricing from "@/components/home/pricing";
-import Footer from "@/components/layout/footer";
-import Navbar from "@/components/layout/navbar";
-import DuplicateSelector from "@/components/home/duplicate-images";
-import InteractiveBeeMascot from "@/components/canvas/interactive-bee-mascot";
-import Hero from "@/components/home/new-hero";
-import Prism from "@/components/ui/background";
+import Home from "@/features/home/ui/pages/home";
 
 export const metadata: Metadata = {
   title: "Beeclean - Professional iPhone Cleaning & Optimization",
@@ -62,36 +48,9 @@ export const metadata: Metadata = {
   },
 };
 
-const Home = () => {
+const HomePage = () => {
   return (
-    <div className="relative min-h-screen">
-      {/* Global Background */}
-      <div className="fixed inset-0 -z-10 pointer-events-none">
-{/* <div className="h-full bg-gradient-to-r from-amber-50 via-yellow-50 to-emerald-50" /> */}
-      </div>
-
-      <Navbar />
-      <main>
-        <Hero />
-        <DuplicateSelector />
-        <div id="features">
-          <Features />
-        </div>
-        <div id="pricing">
-          <Pricing />
-        </div>
-        <div id="how-it-works">
-          <HowItWorks />
-        </div>
-        <FAQ />
-        <CTA />
-      </main>
-
-      {/* Footer with background to overlay the Prism */}
-      <div className="bg-white dark:bg-slate-950 relative z-10">
-        <Footer />
-      </div>
-    </div>
+    <Home />
   );
 };
 

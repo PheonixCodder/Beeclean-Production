@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import prisma from "@/lib/prisma";
-import { BlogPost } from "@/hooks/use-blog-post";
-import BlogPostClient from "./client";
+import { BlogPost } from "@/features/blogs/hooks/use-blog-post";
+import BlogPostClient from "@/features/blogs/ui/pages/blog";
 
 interface PageProps {
   params: Promise<{ slug: string }>;

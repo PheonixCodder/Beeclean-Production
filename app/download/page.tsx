@@ -1,5 +1,5 @@
 import DownloadComp from "@/components/download";
-import HowItWorks from "@/components/home/how-it-works";
+import HowItWorks from "@/features/home/ui/components/how-it-works";
 import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
 

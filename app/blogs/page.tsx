@@ -1,9 +1,8 @@
-import { BlogData } from "@/hooks/use-blogs";
+import { BlogData } from "@/features/blogs/hooks/use-blogs";
 import prisma from "@/lib/prisma";
-import BlogsPageClient from "./client";
+import BlogsPageClient from "@/features/blogs/ui/pages/blogs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Suspense } from "react";
-import Prism from "@/components/ui/background";
 
 interface PageProps {
   searchParams: Promise<{ tag?: string; search?: string }>;
