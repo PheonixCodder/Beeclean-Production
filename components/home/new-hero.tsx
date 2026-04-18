@@ -36,8 +36,9 @@ const avatarStack = [
 export default function NewHero() {
   return (
     <section className="relative min-h-screen bg-transparent flex items-center overflow-hidden font-satoshi selection:bg-black/5">
-      <div className="min-w-6/7 mt-20 bg-white border border-zinc-100 pt-12 rounded-[3.5rem] mx-auto">
-      <div className="max-w-5/6 mx-auto relative z-10">
+      {/* 1. ADDED SHADOW TO MAIN CONTAINER: shadow-2xl shadow-zinc-200/50 */}
+      <div className="min-w-6/7 mt-20 bg-white border border-zinc-100 pt-12 rounded-[3.5rem] mx-auto shadow-2xl shadow-zinc-200/50">
+        <div className="max-w-5/6 mx-auto relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-24">
           {/* Left Section: Content & Conversion */}
           <motion.div
