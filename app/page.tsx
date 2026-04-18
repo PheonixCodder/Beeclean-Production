@@ -67,7 +67,7 @@ const Home = () => {
     <div className="relative min-h-screen">
       {/* Global Background */}
       <div className="fixed inset-0 -z-10 pointer-events-none">
-<div className="h-full bg-gradient-to-r from-amber-50 via-yellow-50 to-emerald-50" />
+{/* <div className="h-full bg-gradient-to-r from-amber-50 via-yellow-50 to-emerald-50" /> */}
       </div>
 
       <Navbar />
